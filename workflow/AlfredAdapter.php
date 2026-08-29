@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Alfred\Workflow\BangumiSiteUrl;
 use Alfred\Workflow\DailyBroadcast;
 use Alfred\Workflow\Hello;
 use Alfred\Workflow\ImageCache;
@@ -36,8 +37,8 @@ function dispatchTask(string $task, array $arguments): AlfredSF
  */
 function dailyBroadcast(array $arguments): AlfredSF
 {
-    if (1 !== count($arguments)) {
-        throw new InvalidArgumentException('Usage: daily-broadcast <cache-directory>');
+    if (2 !== count($arguments)) {
+        throw new InvalidArgumentException('Usage: daily-broadcast <cache-directory> <site-domain>');
     }
 
     $schedule = (new DailyBroadcast())();
@@ -49,6 +50,7 @@ function dailyBroadcast(array $arguments): AlfredSF
     }
 
     $imagePaths = (new ImageCache())->cache($imageUrls, $arguments[0]);
+    $buildSiteUrl = new BangumiSiteUrl();
     $items = [];
 
     foreach ($schedule['items'] as $subject) {
@@ -71,11 +73,7 @@ function dailyBroadcast(array $arguments): AlfredSF
             $details[] = sprintf('%s 开播', $subject['air_date']);
         }
 
-        $url = preg_replace('/^http:/', 'https:', $subject['url']);
-
-        if (null === $url) {
-            throw new RuntimeException('Unable to build the Bangumi subject URL.');
-        }
+        $url = $buildSiteUrl($subject['url'], $arguments[1]);
 
         $items[] = new AlfredSFItem(
             title: $title,
