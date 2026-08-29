@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Alfred\Workflow\BangumiSdk\Dto\LegacySubjectSmall;
 use Alfred\Workflow\BangumiSiteUrl;
 use Alfred\Workflow\DailyBroadcast;
 use Alfred\Workflow\Hello;
@@ -42,47 +43,50 @@ function dailyBroadcast(array $arguments): AlfredSF
     }
 
     $schedule = (new DailyBroadcast())();
-    $weekday = $schedule['weekday']['cn'];
+    $weekday = $schedule->weekday->cn;
     $imageUrls = [];
 
-    foreach ($schedule['items'] as $subject) {
-        $imageUrls[$subject['id']] = $subject['image_common'];
+    foreach ($schedule->items as $subject) {
+        $subjectFields = requiredSubjectFields($subject);
+        $imageUrls[$subjectFields['id']] = $subject->images->common ?? '';
     }
 
     $imagePaths = (new ImageCache())->cache($imageUrls, $arguments[0]);
     $buildSiteUrl = new BangumiSiteUrl();
     $items = [];
 
-    foreach ($schedule['items'] as $subject) {
-        $title = '' !== $subject['name_cn'] ? $subject['name_cn'] : $subject['name'];
+    foreach ($schedule->items as $subject) {
+        $subjectFields = requiredSubjectFields($subject);
+        $nameCn = $subject->name_cn ?? '';
+        $title = '' !== $nameCn ? $nameCn : $subjectFields['name'];
         $details = [];
 
-        if ($title !== $subject['name']) {
-            $details[] = $subject['name'];
+        if ($title !== $subjectFields['name']) {
+            $details[] = $subjectFields['name'];
         }
 
-        if (null !== $subject['rating'] && $subject['rating']['score'] > 0) {
-            $details[] = sprintf('评分 %.1f', $subject['rating']['score']);
+        if (null !== $subject->rating?->score && $subject->rating->score > 0) {
+            $details[] = sprintf('评分 %.1f', $subject->rating->score);
         }
 
-        if (null !== $subject['eps'] && $subject['eps'] > 0) {
-            $details[] = sprintf('全 %d 话', $subject['eps']);
+        if (null !== $subject->eps && $subject->eps > 0) {
+            $details[] = sprintf('全 %d 话', $subject->eps);
         }
 
-        if ('' !== $subject['air_date']) {
-            $details[] = sprintf('%s 开播', $subject['air_date']);
+        if (null !== $subject->air_date && '' !== $subject->air_date) {
+            $details[] = sprintf('%s 开播', $subject->air_date);
         }
 
-        $url = $buildSiteUrl($subject['url'], $arguments[1]);
+        $url = $buildSiteUrl($subjectFields['url'], $arguments[1]);
 
         $items[] = new AlfredSFItem(
             title: $title,
             arg: $url,
-            icon: isset($imagePaths[$subject['id']]) ? new AlfredSFItemIcon($imagePaths[$subject['id']]) : null,
-            match: $title.' '.$subject['name'],
+            icon: isset($imagePaths[$subjectFields['id']]) ? new AlfredSFItemIcon($imagePaths[$subjectFields['id']]) : null,
+            match: $title.' '.$subjectFields['name'],
             quicklookurl: $url,
             subtitle: $weekday.([] === $details ? '' : ' · '.implode(' · ', $details)),
-            uid: 'bangumi-subject-'.$subject['id'],
+            uid: 'bangumi-subject-'.$subjectFields['id'],
         );
     }
 
@@ -98,6 +102,30 @@ function dailyBroadcast(array $arguments): AlfredSF
         cache: new AlfredSFCache(seconds: 43200, loosereload: true),
         skipknowledge: true,
     );
+}
+
+/**
+ * Return subject fields required to build an Alfred item.
+ *
+ * @return array{id: int, url: string, name: string}
+ */
+function requiredSubjectFields(LegacySubjectSmall $subject): array
+{
+    if (
+        null === $subject->id
+        || null === $subject->url
+        || '' === $subject->url
+        || null === $subject->name
+        || '' === $subject->name
+    ) {
+        throw new RuntimeException('Bangumi returned an incomplete subject.');
+    }
+
+    return [
+        'id' => $subject->id,
+        'url' => $subject->url,
+        'name' => $subject->name,
+    ];
 }
 
 /**

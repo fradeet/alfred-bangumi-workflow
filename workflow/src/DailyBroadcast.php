@@ -6,40 +6,22 @@ namespace Alfred\Workflow;
 
 use Alfred\Workflow\BangumiSdk\Connectors\BangumiConnector;
 use Alfred\Workflow\BangumiSdk\Dto\GetCalendarResponse;
-use Alfred\Workflow\BangumiSdk\Dto\LegacySubjectSmall;
 use Alfred\Workflow\BangumiSdk\Requests\GetCalendarRequest;
 
-/**
- * Fetch and validate Bangumi's legacy calendar endpoint.
- *
- * @phpstan-type Weekday array{id: int, en: string, cn: string, ja: string}
- * @phpstan-type Subject array{
- *     id: int,
- *     url: string,
- *     name: string,
- *     name_cn: string,
- *     air_date: string,
- *     eps: int|null,
- *     rating: array{score: float|int}|null,
- *     image_common: string
- * }
- * @phpstan-type Schedule array{weekday: Weekday, items: list<Subject>}
- */
+/** Fetch today's schedule from Bangumi's legacy calendar endpoint. */
 final class DailyBroadcast
 {
     public function __construct(private readonly BangumiConnector $connector = new BangumiConnector()) {}
 
     /**
      * Return today's broadcasts using the local system date.
-     *
-     * @return Schedule
      */
-    public function __invoke(): array
+    public function __invoke(): GetCalendarResponse
     {
         $weekdayId = $this->systemWeekdayId();
 
         foreach ($this->fetchCalendar() as $schedule) {
-            if ($weekdayId === $schedule['weekday']['id']) {
+            if ($weekdayId === $schedule->weekday->id) {
                 return $schedule;
             }
         }
@@ -48,7 +30,7 @@ final class DailyBroadcast
     }
 
     /**
-     * @return list<Schedule>
+     * @return list<GetCalendarResponse>
      */
     private function fetchCalendar(): array
     {
@@ -69,59 +51,10 @@ final class DailyBroadcast
                 throw new \RuntimeException('Bangumi returned an invalid daily schedule.');
             }
 
-            $schedules[] = $this->mapSchedule($schedule);
+            $schedules[] = $schedule;
         }
 
         return $schedules;
-    }
-
-    /**
-     * @return Schedule
-     */
-    private function mapSchedule(GetCalendarResponse $schedule): array
-    {
-        $parsedItems = [];
-
-        foreach ($schedule->items as $item) {
-            $parsedItems[] = $this->mapSubject($item);
-        }
-
-        return [
-            'weekday' => [
-                'id' => $schedule->weekday->id,
-                'en' => $schedule->weekday->en,
-                'cn' => $schedule->weekday->cn,
-                'ja' => $schedule->weekday->ja,
-            ],
-            'items' => $parsedItems,
-        ];
-    }
-
-    /**
-     * @return Subject
-     */
-    private function mapSubject(LegacySubjectSmall $subject): array
-    {
-        if (
-            null === $subject->id
-            || null === $subject->url
-            || '' === $subject->url
-            || null === $subject->name
-            || '' === $subject->name
-        ) {
-            throw new \RuntimeException('Bangumi returned an incomplete subject.');
-        }
-
-        return [
-            'id' => $subject->id,
-            'url' => $subject->url,
-            'name' => $subject->name,
-            'name_cn' => $subject->name_cn ?? '',
-            'air_date' => $subject->air_date ?? '',
-            'eps' => $subject->eps,
-            'rating' => null === $subject->rating?->score ? null : ['score' => $subject->rating->score],
-            'image_common' => $subject->images->common ?? '',
-        ];
     }
 
     private function systemWeekdayId(): int
