@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Alfred\Workflow;
 
+use Alfred\Workflow\BangumiSdk\Connectors\BangumiConnector;
+use Alfred\Workflow\BangumiSdk\Dto\GetCalendarResponse;
+use Alfred\Workflow\BangumiSdk\Dto\LegacySubjectSmall;
+use Alfred\Workflow\BangumiSdk\Requests\GetCalendarRequest;
+
 /**
  * Fetch and validate Bangumi's legacy calendar endpoint.
  *
@@ -22,8 +27,7 @@ namespace Alfred\Workflow;
  */
 final class DailyBroadcast
 {
-    private const ENDPOINT = 'https://api.bgm.tv/calendar';
-    private const USER_AGENT = 'alfred-bangumi-workflow/1.0 (https://github.com/fradeet/alfred-bangumi-workflow)';
+    public function __construct(private readonly BangumiConnector $connector = new BangumiConnector()) {}
 
     /**
      * Return today's broadcasts using the local system date.
@@ -48,37 +52,10 @@ final class DailyBroadcast
      */
     private function fetchCalendar(): array
     {
-        $curl = curl_init(self::ENDPOINT);
-
-        if (false === $curl) {
-            throw new \RuntimeException('Unable to initialize the Bangumi request.');
-        }
-
-        curl_setopt_array($curl, [
-            CURLOPT_CONNECTTIMEOUT => 5,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTPHEADER => ['Accept: application/json'],
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 15,
-            CURLOPT_USERAGENT => self::USER_AGENT,
-        ]);
-
-        $body = curl_exec($curl);
-        $status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
-        $error = curl_error($curl);
-
-        if (!is_string($body)) {
-            throw new \RuntimeException('Unable to request Bangumi: '.$error);
-        }
-
-        if (200 !== $status) {
-            throw new \RuntimeException(sprintf('Bangumi returned HTTP %d.', $status));
-        }
-
         try {
-            $calendar = json_decode($body, true, flags: JSON_THROW_ON_ERROR);
-        } catch (\JsonException $exception) {
-            throw new \RuntimeException('Bangumi returned invalid JSON.', previous: $exception);
+            $calendar = $this->connector->send(new GetCalendarRequest())->dtoOrFail();
+        } catch (\Throwable $exception) {
+            throw new \RuntimeException('Unable to request the Bangumi calendar.', previous: $exception);
         }
 
         if (!is_array($calendar) || !array_is_list($calendar)) {
@@ -88,7 +65,11 @@ final class DailyBroadcast
         $schedules = [];
 
         foreach ($calendar as $schedule) {
-            $schedules[] = $this->parseSchedule($schedule);
+            if (!$schedule instanceof GetCalendarResponse) {
+                throw new \RuntimeException('Bangumi returned an invalid daily schedule.');
+            }
+
+            $schedules[] = $this->mapSchedule($schedule);
         }
 
         return $schedules;
@@ -97,31 +78,20 @@ final class DailyBroadcast
     /**
      * @return Schedule
      */
-    private function parseSchedule(mixed $value): array
+    private function mapSchedule(GetCalendarResponse $schedule): array
     {
-        if (!is_array($value)) {
-            throw new \RuntimeException('Bangumi returned an invalid daily schedule.');
-        }
-
-        $weekday = $value['weekday'] ?? null;
-        $items = $value['items'] ?? null;
-
-        if (!is_array($weekday) || !is_array($items) || !array_is_list($items)) {
-            throw new \RuntimeException('Bangumi returned an incomplete daily schedule.');
-        }
-
         $parsedItems = [];
 
-        foreach ($items as $item) {
-            $parsedItems[] = $this->parseSubject($item);
+        foreach ($schedule->items as $item) {
+            $parsedItems[] = $this->mapSubject($item);
         }
 
         return [
             'weekday' => [
-                'id' => $this->requiredInt($weekday, 'id'),
-                'en' => $this->requiredString($weekday, 'en'),
-                'cn' => $this->requiredString($weekday, 'cn'),
-                'ja' => $this->requiredString($weekday, 'ja'),
+                'id' => $schedule->weekday->id,
+                'en' => $schedule->weekday->en,
+                'cn' => $schedule->weekday->cn,
+                'ja' => $schedule->weekday->ja,
             ],
             'items' => $parsedItems,
         ];
@@ -130,63 +100,28 @@ final class DailyBroadcast
     /**
      * @return Subject
      */
-    private function parseSubject(mixed $value): array
+    private function mapSubject(LegacySubjectSmall $subject): array
     {
-        if (!is_array($value)) {
-            throw new \RuntimeException('Bangumi returned an invalid subject.');
-        }
-
-        $eps = $value['eps'] ?? null;
-        $rating = $value['rating'] ?? null;
-        $images = $value['images'] ?? null;
-        $parsedRating = null;
-
-        if (is_array($rating) && isset($rating['score']) && (is_float($rating['score']) || is_int($rating['score']))) {
-            $parsedRating = ['score' => $rating['score']];
+        if (
+            null === $subject->id
+            || null === $subject->url
+            || '' === $subject->url
+            || null === $subject->name
+            || '' === $subject->name
+        ) {
+            throw new \RuntimeException('Bangumi returned an incomplete subject.');
         }
 
         return [
-            'id' => $this->requiredInt($value, 'id'),
-            'url' => $this->requiredString($value, 'url'),
-            'name' => $this->requiredString($value, 'name'),
-            'name_cn' => $this->optionalString($value, 'name_cn'),
-            'air_date' => $this->optionalString($value, 'air_date'),
-            'eps' => is_int($eps) ? $eps : null,
-            'rating' => $parsedRating,
-            'image_common' => is_array($images) ? $this->optionalString($images, 'common') : '',
+            'id' => $subject->id,
+            'url' => $subject->url,
+            'name' => $subject->name,
+            'name_cn' => $subject->name_cn ?? '',
+            'air_date' => $subject->air_date ?? '',
+            'eps' => $subject->eps,
+            'rating' => null === $subject->rating?->score ? null : ['score' => $subject->rating->score],
+            'image_common' => $subject->images->common ?? '',
         ];
-    }
-
-    /** @param array<mixed> $values */
-    private function requiredInt(array $values, string $key): int
-    {
-        $value = $values[$key] ?? null;
-
-        if (!is_int($value)) {
-            throw new \RuntimeException(sprintf('Bangumi response field "%s" must be an integer.', $key));
-        }
-
-        return $value;
-    }
-
-    /** @param array<mixed> $values */
-    private function requiredString(array $values, string $key): string
-    {
-        $value = $values[$key] ?? null;
-
-        if (!is_string($value) || '' === $value) {
-            throw new \RuntimeException(sprintf('Bangumi response field "%s" must be a non-empty string.', $key));
-        }
-
-        return $value;
-    }
-
-    /** @param array<mixed> $values */
-    private function optionalString(array $values, string $key): string
-    {
-        $value = $values[$key] ?? null;
-
-        return is_string($value) ? $value : '';
     }
 
     private function systemWeekdayId(): int
