@@ -8,6 +8,19 @@
 	<string>Internet</string>
 	<key>connections</key>
 	<dict>
+		<key>6D3ACD68-A616-4E6E-9237-1DA63C7C5632</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D5FE9461-440A-4624-8C11-1B49EBA64306</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>FCE893BB-5D54-4BDE-9357-AD27832C652D</key>
 		<array>
 			<dict>
@@ -35,21 +48,21 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>ta</string>
-				<key>subtext</key>
+				<key>browser</key>
 				<string></string>
-				<key>text</key>
-				<string>Today Animes</string>
-				<key>withspace</key>
+				<key>skipqueryencode</key>
 				<false/>
+				<key>skipvarencode</key>
+				<false/>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{query}</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
+			<string>alfred.workflow.action.openurl</string>
 			<key>uid</key>
-			<string>FCE893BB-5D54-4BDE-9357-AD27832C652D</string>
+			<string>D5FE9461-440A-4624-8C11-1B49EBA64306</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -75,7 +88,7 @@
 				<key>showtitles</key>
 				<true/>
 				<key>subtitlesinfooter</key>
-				<false/>
+				<true/>
 				<key>titlesinfooter</key>
 				<false/>
 			</dict>
@@ -83,6 +96,27 @@
 			<string>alfred.workflow.userinterface.grid</string>
 			<key>uid</key>
 			<string>6D3ACD68-A616-4E6E-9237-1DA63C7C5632</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>{var:TODAY_ANIME_KEYWORD}</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Today Animes</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>FCE893BB-5D54-4BDE-9357-AD27832C652D</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -98,8 +132,17 @@
 			<key>ypos</key>
 			<real>35</real>
 		</dict>
+		<key>D5FE9461-440A-4624-8C11-1B49EBA64306</key>
+		<dict>
+			<key>xpos</key>
+			<real>465</real>
+			<key>ypos</key>
+			<real>35</real>
+		</dict>
 		<key>FCE893BB-5D54-4BDE-9357-AD27832C652D</key>
 		<dict>
+			<key>note</key>
+			<string>Today Anime</string>
 			<key>xpos</key>
 			<real>65</real>
 			<key>ypos</key>
@@ -107,7 +150,61 @@
 		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>
-	<array/>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>ta</string>
+				<key>placeholder</key>
+				<string>ta</string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string></string>
+			<key>label</key>
+			<string>Today Anime Keyword</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>TODAY_ANIME_KEYWORD</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>https://bgm.tv/</string>
+				<key>pairs</key>
+				<array>
+					<array>
+						<string>bgm.tv</string>
+						<string>https://bgm.tv/</string>
+					</array>
+					<array>
+						<string>bangumi.tv</string>
+						<string>https://bangumi.tv/</string>
+					</array>
+					<array>
+						<string>chii.in</string>
+						<string>https://chii.in/</string>
+					</array>
+				</array>
+			</dict>
+			<key>description</key>
+			<string>Choose a site domain.</string>
+			<key>label</key>
+			<string>Bangumi.tv Domain</string>
+			<key>type</key>
+			<string>popupbutton</string>
+			<key>variable</key>
+			<string>BGM_SITE_DOMAIN</string>
+		</dict>
+	</array>
+	<key>version</key>
+	<string>0.0.2</string>
 	<key>webaddress</key>
 	<string></string>
 </dict>
