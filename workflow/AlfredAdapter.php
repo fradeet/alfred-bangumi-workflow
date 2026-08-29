@@ -95,7 +95,7 @@ function dailyBroadcast(array $arguments): AlfredSF
 
     return new AlfredSF(
         items: $items,
-        cache: new AlfredSFCache(seconds: 300, loosereload: true),
+        cache: new AlfredSFCache(seconds: 43200, loosereload: true),
         skipknowledge: true,
     );
 }
