@@ -1,5 +1,5 @@
 {
-  "name": "fradeet/alfred-workflow-php-template",
+  "name": "fradeet/alfred-bangumi-workflow",
   "description": "For create Alfred workflow easily",
   "type": "project",
   "require": {
@@ -9,7 +9,7 @@
     "friendsofphp/php-cs-fixer": "^3.95",
     "phpstan/phpstan": "^2.2"
   },
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "authors": [
     {
       "name": "Fradeet Y.",

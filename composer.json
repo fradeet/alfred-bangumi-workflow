@@ -1,5 +1,5 @@
 {
-  "name": "fradeet/alfred-workflow-php-template",
+  "name": "fradeet/alfred-bangumi-workflow",
   "description": "A PHP template for creating Alfred workflows",
   "type": "project",
   "keywords": [
@@ -8,7 +8,7 @@
     "template"
   ],
   "homepage": "https://github.com/fradeet/alfred-workflow-php-template",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "authors": [
     {
       "name": "Fradeet Y.",

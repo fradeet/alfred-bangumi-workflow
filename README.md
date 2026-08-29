@@ -169,4 +169,4 @@ vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no
 
 ## License
 
-This project is available under the MIT License.
+This project is licensed under the [GNU General Public License v3.0](LICENSE).
