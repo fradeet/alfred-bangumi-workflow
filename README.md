@@ -62,6 +62,24 @@ The command writes valid Alfred Script Filter JSON to standard output:
 PHP warnings and other displayed diagnostics are written to standard error so
 they do not corrupt Alfred's JSON input.
 
+## Daily Bangumi broadcasts
+
+Run the daily broadcast Script Filter to list today's anime. Selecting a result
+passes its Bangumi subject URL to the next Alfred action. The workflow determines
+the current weekday from the local system date automatically. Common-size cover
+images are cached under Alfred's `alfred_workflow_cache` directory and reused on
+later runs. Cached covers expire after 365 days and are removed automatically:
+
+```bash
+./workflow/alfred_run_daily_broadcast.sh
+```
+
+In Alfred, add a Script Filter and call the runner without passing `{query}`:
+
+```bash
+"$PWD/workflow/alfred_run_daily_broadcast.sh"
+```
+
 CLI usage and task errors are also returned as Alfred Script Filter JSON, with
 a non-zero exit status. For example, an unknown task outputs:
 
