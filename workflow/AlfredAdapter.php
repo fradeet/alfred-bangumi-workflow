@@ -86,6 +86,7 @@ function dailyBroadcast(array $arguments): AlfredSF
             match: $title.' '.$subjectFields['name'],
             quicklookurl: $url,
             subtitle: $weekday.([] === $details ? '' : ' · '.implode(' · ', $details)),
+            text: new AlfredSFItemText(copy: $title, largetype: $title),
             uid: 'bangumi-subject-'.$subjectFields['id'],
         );
     }
