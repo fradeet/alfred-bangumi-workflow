@@ -3,11 +3,13 @@
   "description": "For create Alfred workflow easily",
   "type": "project",
   "require": {
-    "php": ">=8.3"
+    "php": ">=8.3",
+    "saloonphp/saloon": "^4.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.95",
-    "phpstan/phpstan": "^2.2"
+    "phpstan/phpstan": "^2.2",
+    "symfony/var-dumper": "^8.1"
   },
   "license": "GPL-3.0-only",
   "authors": [
