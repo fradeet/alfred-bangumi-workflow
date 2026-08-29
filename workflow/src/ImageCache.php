@@ -19,7 +19,7 @@ final class ImageCache
     {
         $coverDirectory = rtrim($cacheDirectory, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.'covers';
 
-        if (!is_dir($coverDirectory) && !@mkdir($coverDirectory, 0755, true) && !is_dir($coverDirectory)) {
+        if (!is_dir($coverDirectory) && !@mkdir($coverDirectory, 0o755, true) && !is_dir($coverDirectory)) {
             return [];
         }
 
