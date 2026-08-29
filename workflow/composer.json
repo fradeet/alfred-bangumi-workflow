@@ -1,0 +1,31 @@
+{
+  "name": "fradeet/alfred-workflow-php-template",
+  "description": "For create Alfred workflow easily",
+  "type": "project",
+  "require": {},
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.95",
+    "phpstan/phpstan": "^2.2"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Fradeet Y.",
+      "email": "41571697+fradeet@users.noreply.github.com"
+    }
+  ],
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Alfred\\Workflow\\": "src/"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "fradeet/alfred-workflow-php-template",
+  "description": "A PHP template for creating Alfred workflows",
+  "type": "project",
+  "keywords": [
+    "alfred",
+    "alfred-workflow",
+    "template"
+  ],
+  "homepage": "https://github.com/fradeet/alfred-workflow-php-template",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Fradeet Y.",
+      "email": "41571697+fradeet@users.noreply.github.com"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/fradeet/alfred-workflow-php-template/issues",
+    "source": "https://github.com/fradeet/alfred-workflow-php-template"
+  }
+}

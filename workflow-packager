@@ -1,0 +1,60 @@
+#!/bin/bash
+# https://www.alfredforum.com/topic/10838-how-to-package-workflows-from-the-command-line/
+
+set -euo pipefail
+
+readonly project_directory="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+readonly workflow_directory="${project_directory}/workflow"
+readonly info_plist="${workflow_directory}/info.plist"
+readonly composer_installed="${workflow_directory}/vendor/composer/installed.php"
+
+if [[ ! -f "${info_plist}" ]]; then
+    echo "Could not find ${info_plist}." >&2
+    exit 1
+fi
+
+readonly workflow_name="$(/usr/libexec/PlistBuddy -c 'Print :name' "${info_plist}")"
+
+if [[ -z "${workflow_name}" ]]; then
+    echo "The workflow name in ${info_plist} cannot be empty." >&2
+    exit 1
+fi
+
+if [[ -f "${composer_installed}" ]] \
+    && php -r 'exit((require $argv[1])["root"]["dev"] === true ? 0 : 1);' "${composer_installed}"
+then
+    echo "Composer development dependencies are installed; reinstalling without them."
+    composer install --working-dir="${workflow_directory}" --no-dev --no-interaction
+fi
+
+readonly workflow_file="${1:-${project_directory}/${workflow_name}.alfredworkflow}"
+readonly temporary_directory="$(mktemp -d "${TMPDIR:-/tmp}/alfred-workflow.XXXXXX")"
+
+cleanup() {
+    rm -rf "${temporary_directory}"
+}
+
+trap cleanup EXIT
+
+ditto "${workflow_directory}" "${temporary_directory}/workflow"
+find "${temporary_directory}/workflow" -name '.DS_Store' -delete
+
+readonly temporary_info_plist="${temporary_directory}/workflow/info.plist"
+
+if /usr/libexec/PlistBuddy -c 'Print :variablesdontexport' "${temporary_info_plist}" &>/dev/null; then
+    while IFS= read -r variable_name; do
+        /usr/libexec/PlistBuddy \
+            -c "Set :variables:'${variable_name}' ''" \
+            "${temporary_info_plist}"
+    done < <(
+        /usr/libexec/PlistBuddy -c 'Print :variablesdontexport' "${temporary_info_plist}" \
+            | sed -nE 's/^[[:space:]]+([^{}]+)$/\1/p'
+    )
+fi
+
+if DITTONORSRC=1 ditto -ck "${temporary_directory}/workflow" "${workflow_file}"; then
+    echo "Created ${workflow_file}"
+else
+    echo "There was an error creating ${workflow_file}." >&2
+    exit 1
+fi
