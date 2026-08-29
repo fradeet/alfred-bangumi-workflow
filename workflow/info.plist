@@ -203,9 +203,11 @@
 			<string>BGM_SITE_DOMAIN</string>
 		</dict>
 	</array>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
 	<string>0.0.2</string>
 	<key>webaddress</key>
-	<string></string>
+	<string>https://github.com/fradeet/alfred-bangumi-workflow</string>
 </dict>
 </plist>
