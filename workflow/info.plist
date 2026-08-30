@@ -48,6 +48,27 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>D5FE9461-440A-4624-8C11-1B49EBA64306</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>columncount</key>
 				<integer>5</integer>
 				<key>filterable</key>
@@ -75,27 +96,6 @@
 			<string>alfred.workflow.userinterface.grid</string>
 			<key>uid</key>
 			<string>6D3ACD68-A616-4E6E-9237-1DA63C7C5632</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>browser</key>
-				<string></string>
-				<key>skipqueryencode</key>
-				<false/>
-				<key>skipvarencode</key>
-				<false/>
-				<key>spaces</key>
-				<string></string>
-				<key>url</key>
-				<string>{query}</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openurl</string>
-			<key>uid</key>
-			<string>D5FE9461-440A-4624-8C11-1B49EBA64306</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
