@@ -1,6 +1,6 @@
 # Alfred Bangumi Workflow
 
-An Alfred workflow that lists today's Bangumi anime schedule, browses every anime in the current calendar, and displays details for a selected subject. The project separates Alfred-specific adapters from reusable core logic:
+An Alfred workflow that lists today's Bangumi anime schedule, browses every anime in the current calendar, and displays details and related entries for a selected subject. The project separates Alfred-specific adapters from reusable core logic:
 
 ```text
 Alfred -> operation-specific PHP adapter -> core class
@@ -40,7 +40,15 @@ Fetch details for a subject URL:
 workflow/src/AlfredAdapter/SubjectDetails.php https://bgm.tv/subject/424883
 ```
 
-Each Adapter writes the JSON expected by its Alfred object to standard output: Script Filter JSON for daily broadcasts and seasonal anime, and Text View JSON for subject details. PHP diagnostics go to standard error so they do not corrupt Alfred's input. Failures produce valid JSON for the corresponding Alfred object and return a non-zero exit status.
+List entries related to a subject URL:
+
+```bash
+workflow/src/AlfredAdapter/SubjectRelations.php https://bgm.tv/subject/424883
+```
+
+Related-entry responses are cached locally for eight hours, keyed by subject ID and the selected Bangumi mirror. The cache is stored below `alfred_workflow_cache`, or the system temporary directory when Alfred does not provide one.
+
+Each Adapter writes the JSON expected by its Alfred object to standard output: Script Filter JSON for daily broadcasts, seasonal anime, and subject relations, and Text View JSON for subject details. PHP diagnostics go to standard error so they do not corrupt Alfred's input. Failures produce valid JSON for the corresponding Alfred object and return a non-zero exit status.
 
 The bundled `workflow/info.plist` configures the Grid and Text View objects to use these executable PHP files directly.
 
@@ -81,6 +89,7 @@ find workflow -name '*.php' -not -path 'workflow/vendor/*' -exec php -l {} \;
 workflow/src/AlfredAdapter/DailyBroadcast.php
 workflow/src/AlfredAdapter/SeasonalAnime.php
 workflow/src/AlfredAdapter/SubjectDetails.php https://bgm.tv/subject/424883
+workflow/src/AlfredAdapter/SubjectRelations.php https://bgm.tv/subject/424883
 (cd workflow && vendor/bin/phpstan analyse src --no-progress)
 (cd workflow && vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no --sequential)
 plutil -lint workflow/info.plist

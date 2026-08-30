@@ -22,11 +22,63 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>D5FE9461-440A-4624-8C11-1B49EBA64306</string>
+				<string>33932D93-6610-41F6-B1DD-771D024735E3</string>
 				<key>modifiers</key>
-				<integer>524288</integer>
+				<integer>0</integer>
 				<key>modifiersubtext</key>
-				<string>Open in browser</string>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>33932D93-6610-41F6-B1DD-771D024735E3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>3D4FE817-3B19-4727-B8F7-818DA776E91F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>3D4FE817-3B19-4727-B8F7-818DA776E91F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A58ECFFD-0219-439E-ACC9-F78600AD4DE2</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>44701FE5-003E-49E8-A2E6-C588CA3DCBBA</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>45BDF43B-E681-4006-B974-59EE745F8BDB</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>52B547F0-F78A-4F25-8A22-6C1792AB58DE</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D7CDFF11-8B19-4679-BEDE-B33AD5527EA6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -45,11 +97,53 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>D5FE9461-440A-4624-8C11-1B49EBA64306</string>
+				<string>33932D93-6610-41F6-B1DD-771D024735E3</string>
 				<key>modifiers</key>
-				<integer>524288</integer>
+				<integer>262144</integer>
 				<key>modifiersubtext</key>
-				<string>Open in browser</string>
+				<string>Open Command Panel</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>8EBA7AE5-4055-41B4-8EF3-8891BCA20F23</key>
+		<array/>
+		<key>A58ECFFD-0219-439E-ACC9-F78600AD4DE2</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>52B547F0-F78A-4F25-8A22-6C1792AB58DE</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>EE3783AE-476B-4C7A-836D-605532BEBD73</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>F57D9644-7401-4229-911F-D0EDB10BE2E3</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>0D62C655-6C22-4333-A2D3-D3957A6BE56D</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>F57D9644-7401-4229-911F-D0EDB10BE2E3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>45BDF43B-E681-4006-B974-59EE745F8BDB</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -94,72 +188,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>columncount</key>
-				<integer>5</integer>
-				<key>filterable</key>
-				<false/>
-				<key>fixedorder</key>
-				<false/>
-				<key>imageaspect</key>
-				<integer>1</integer>
-				<key>inputfile</key>
-				<string>src/AlfredAdapter/DailyBroadcast.php</string>
-				<key>inputtype</key>
-				<integer>1</integer>
-				<key>loadingtext</key>
-				<string>Loading...</string>
-				<key>showsubtitles</key>
-				<true/>
-				<key>showtitles</key>
-				<true/>
-				<key>subtitlesinfooter</key>
-				<true/>
-				<key>titlesinfooter</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.userinterface.grid</string>
-			<key>uid</key>
-			<string>6D3ACD68-A616-4E6E-9237-1DA63C7C5632</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>behaviour</key>
-				<integer>2</integer>
-				<key>fontmode</key>
-				<integer>0</integer>
-				<key>fontsizing</key>
-				<integer>0</integer>
-				<key>footertext</key>
-				<string></string>
-				<key>inputfile</key>
-				<string>src/AlfredAdapter/SubjectDetails.php</string>
-				<key>inputtype</key>
-				<integer>1</integer>
-				<key>loadingtext</key>
-				<string>Loading...</string>
-				<key>outputmode</key>
-				<integer>0</integer>
-				<key>scriptinput</key>
-				<integer>0</integer>
-				<key>spellchecking</key>
-				<integer>0</integer>
-				<key>stackview</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.userinterface.text</string>
-			<key>uid</key>
-			<string>8EBA7AE5-4055-41B4-8EF3-8891BCA20F23</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>keyword</key>
@@ -181,6 +209,72 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>behaviour</key>
+				<integer>2</integer>
+				<key>fontmode</key>
+				<integer>0</integer>
+				<key>fontsizing</key>
+				<integer>0</integer>
+				<key>footertext</key>
+				<string></string>
+				<key>inputfile</key>
+				<string>src/AlfredAdapter/SubjectDetails.php</string>
+				<key>inputtype</key>
+				<integer>1</integer>
+				<key>loadingtext</key>
+				<string></string>
+				<key>outputmode</key>
+				<integer>0</integer>
+				<key>scriptinput</key>
+				<integer>0</integer>
+				<key>spellchecking</key>
+				<integer>0</integer>
+				<key>stackview</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.userinterface.text</string>
+			<key>uid</key>
+			<string>8EBA7AE5-4055-41B4-8EF3-8891BCA20F23</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>columncount</key>
+				<integer>5</integer>
+				<key>filterable</key>
+				<false/>
+				<key>fixedorder</key>
+				<false/>
+				<key>imageaspect</key>
+				<integer>1</integer>
+				<key>inputfile</key>
+				<string>src/AlfredAdapter/DailyBroadcast.php</string>
+				<key>inputtype</key>
+				<integer>1</integer>
+				<key>loadingtext</key>
+				<string></string>
+				<key>showsubtitles</key>
+				<true/>
+				<key>showtitles</key>
+				<true/>
+				<key>subtitlesinfooter</key>
+				<true/>
+				<key>titlesinfooter</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.userinterface.grid</string>
+			<key>uid</key>
+			<string>6D3ACD68-A616-4E6E-9237-1DA63C7C5632</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>browser</key>
 				<string></string>
 				<key>skipqueryencode</key>
@@ -190,33 +284,12 @@
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
-				<string>{query}</string>
+				<string></string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.openurl</string>
 			<key>uid</key>
-			<string>D5FE9461-440A-4624-8C11-1B49EBA64306</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>{var:SEASON_ANIME_KEYWORD}</string>
-				<key>subtext</key>
-				<string></string>
-				<key>text</key>
-				<string>Anime in this season</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>F72A6308-DF7F-483A-998C-465F17CD0411</string>
+			<string>D7CDFF11-8B19-4679-BEDE-B33AD5527EA6</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -253,6 +326,210 @@
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>{var:SEASON_ANIME_KEYWORD}</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Anime in this season</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>F72A6308-DF7F-483A-998C-465F17CD0411</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>fixedorder</key>
+				<false/>
+				<key>items</key>
+				<string>[{"title":"Open in browser","arg":"open"},{"title":"View Relations","arg":"relations"}]</string>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string></string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.listfilter</string>
+			<key>uid</key>
+			<string>3D4FE817-3B19-4727-B8F7-818DA776E91F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>open</string>
+						<key>outputlabel</key>
+						<string>open</string>
+						<key>uid</key>
+						<string>EE3783AE-476B-4C7A-836D-605532BEBD73</string>
+					</dict>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>relations</string>
+						<key>outputlabel</key>
+						<string>relations</string>
+						<key>uid</key>
+						<string>0D62C655-6C22-4333-A2D3-D3957A6BE56D</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>else</string>
+				<key>hideelse</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.conditional</string>
+			<key>uid</key>
+			<string>A58ECFFD-0219-439E-ACC9-F78600AD4DE2</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict>
+					<key>subject</key>
+					<string>{query}</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>33932D93-6610-41F6-B1DD-771D024735E3</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>{var:subject}</string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>52B547F0-F78A-4F25-8A22-6C1792AB58DE</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>{var:subject}</string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>F57D9644-7401-4229-911F-D0EDB10BE2E3</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>columncount</key>
+				<integer>4</integer>
+				<key>filterable</key>
+				<true/>
+				<key>fixedorder</key>
+				<false/>
+				<key>imageaspect</key>
+				<integer>0</integer>
+				<key>inputfile</key>
+				<string>src/AlfredAdapter/SubjectRelations.php</string>
+				<key>inputtype</key>
+				<integer>1</integer>
+				<key>loadingtext</key>
+				<string></string>
+				<key>showsubtitles</key>
+				<true/>
+				<key>showtitles</key>
+				<true/>
+				<key>subtitlesinfooter</key>
+				<false/>
+				<key>titlesinfooter</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.userinterface.grid</string>
+			<key>uid</key>
+			<string>45BDF43B-E681-4006-B974-59EE745F8BDB</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>acceptsfiles</key>
+				<false/>
+				<key>acceptsmulti</key>
+				<integer>0</integer>
+				<key>acceptstext</key>
+				<false/>
+				<key>acceptsurls</key>
+				<true/>
+				<key>name</key>
+				<string>View Subject's Relations</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.universalaction</string>
+			<key>uid</key>
+			<string>44701FE5-003E-49E8-A2E6-C588CA3DCBBA</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -264,6 +541,43 @@
 			<real>260</real>
 			<key>ypos</key>
 			<real>215</real>
+		</dict>
+		<key>33932D93-6610-41F6-B1DD-771D024735E3</key>
+		<dict>
+			<key>xpos</key>
+			<real>655</real>
+			<key>ypos</key>
+			<real>245</real>
+		</dict>
+		<key>3D4FE817-3B19-4727-B8F7-818DA776E91F</key>
+		<dict>
+			<key>note</key>
+			<string>Command Panel</string>
+			<key>xpos</key>
+			<real>760</real>
+			<key>ypos</key>
+			<real>215</real>
+		</dict>
+		<key>44701FE5-003E-49E8-A2E6-C588CA3DCBBA</key>
+		<dict>
+			<key>xpos</key>
+			<real>65</real>
+			<key>ypos</key>
+			<real>385</real>
+		</dict>
+		<key>45BDF43B-E681-4006-B974-59EE745F8BDB</key>
+		<dict>
+			<key>xpos</key>
+			<real>1170</real>
+			<key>ypos</key>
+			<real>385</real>
+		</dict>
+		<key>52B547F0-F78A-4F25-8A22-6C1792AB58DE</key>
+		<dict>
+			<key>xpos</key>
+			<real>1070</real>
+			<key>ypos</key>
+			<real>245</real>
 		</dict>
 		<key>6D3ACD68-A616-4E6E-9237-1DA63C7C5632</key>
 		<dict>
@@ -279,12 +593,26 @@
 			<key>ypos</key>
 			<real>35</real>
 		</dict>
-		<key>D5FE9461-440A-4624-8C11-1B49EBA64306</key>
+		<key>A58ECFFD-0219-439E-ACC9-F78600AD4DE2</key>
 		<dict>
 			<key>xpos</key>
-			<real>470</real>
+			<real>960</real>
+			<key>ypos</key>
+			<real>235</real>
+		</dict>
+		<key>D7CDFF11-8B19-4679-BEDE-B33AD5527EA6</key>
+		<dict>
+			<key>xpos</key>
+			<real>1170</real>
 			<key>ypos</key>
 			<real>215</real>
+		</dict>
+		<key>F57D9644-7401-4229-911F-D0EDB10BE2E3</key>
+		<dict>
+			<key>xpos</key>
+			<real>1075</real>
+			<key>ypos</key>
+			<real>370</real>
 		</dict>
 		<key>F72A6308-DF7F-483A-998C-465F17CD0411</key>
 		<dict>
@@ -381,7 +709,7 @@
 		</dict>
 	</array>
 	<key>version</key>
-	<string>0.0.3</string>
+	<string>0.1.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/fradeet/alfred-bangumi-workflow</string>
 </dict>
