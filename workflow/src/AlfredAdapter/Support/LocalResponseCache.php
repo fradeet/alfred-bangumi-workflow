@@ -10,6 +10,7 @@ final class LocalResponseCache
     public function __construct(
         private readonly string $directory,
         private readonly int $ttlSeconds,
+        private readonly bool $bypass = false,
     ) {
         if ($ttlSeconds < 1) {
             throw new \InvalidArgumentException('The response cache lifetime must be greater than zero.');
@@ -18,6 +19,10 @@ final class LocalResponseCache
 
     public function get(string $key): ?string
     {
+        if ($this->bypass) {
+            return null;
+        }
+
         $path = $this->path($key);
 
         if (!is_file($path) || is_link($path)) {
@@ -51,6 +56,10 @@ final class LocalResponseCache
 
     public function put(string $key, string $json): void
     {
+        if ($this->bypass) {
+            return;
+        }
+
         if (!is_dir($this->directory) && !@mkdir($this->directory, 0o755, true) && !is_dir($this->directory)) {
             return;
         }

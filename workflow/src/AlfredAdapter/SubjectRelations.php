@@ -116,6 +116,7 @@ try {
     $responseCache = new LocalResponseCache(
         directory: $cacheDirectory.'/subject-relations',
         ttlSeconds: SUBJECT_RELATIONS_CACHE_SECONDS,
+        bypass: '1' === subjectRelationsEnvironment('alfred_debug', '0'),
     );
     $cacheKey = $subjectId.'|'.$siteDomain;
     $json = $responseCache->get($cacheKey);
