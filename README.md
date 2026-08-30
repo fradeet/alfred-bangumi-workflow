@@ -42,7 +42,7 @@ The bundled `workflow/info.plist` configures the Grid and Text View objects to u
 
 - Put each executable Alfred business Adapter in `workflow/src/AlfredAdapter/`, with one PascalCase PHP file per operation.
 - Read Alfred inputs and environment variables in the relevant Adapter. There is no shared CLI task dispatcher.
-- Keep Alfred JSON response value objects in the `Alfred\Workflow\AlfredAdapter` namespace.
+- Keep Alfred JSON response value objects in `workflow/src/AlfredAdapter/types/` and the `Alfred\Workflow\AlfredAdapter` namespace.
 - Keep Alfred-independent business logic in `workflow/src/` under the `Alfred\Workflow` namespace. Core classes accept explicit inputs and return plain PHP values.
 - Load all classes through `workflow/vendor/autoload.php`; do not require individual core source files.
 
