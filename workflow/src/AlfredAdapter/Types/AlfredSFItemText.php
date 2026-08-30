@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alfred\Workflow\AlfredAdapter\Type;
+namespace Alfred\Workflow\AlfredAdapter\Types;
 
 /** Copy and Large Type text for an Alfred result. */
 class AlfredSFItemText extends AlfredSFBase

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alfred\Workflow\AlfredAdapter\Type;
+namespace Alfred\Workflow\AlfredAdapter\Types;
 
 /** Top-level response used to populate an Alfred Text View. */
 class AlfredTV extends AlfredTVBase

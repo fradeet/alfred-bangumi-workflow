@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alfred\Workflow\AlfredAdapter\Type;
+namespace Alfred\Workflow\AlfredAdapter\Types;
 
 /** Base value object for Alfred Text View JSON structures. */
 class AlfredTVBase extends AlfredResponse {}

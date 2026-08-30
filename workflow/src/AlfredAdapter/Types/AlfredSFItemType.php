@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alfred\Workflow\AlfredAdapter\Type;
+namespace Alfred\Workflow\AlfredAdapter\Types;
 
 /** How Alfred should interpret and validate a result item. */
 enum AlfredSFItemType: string

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alfred\Workflow\AlfredAdapter\Type;
+namespace Alfred\Workflow\AlfredAdapter\Types;
 
 /** Controls how an Alfred Text View updates and handles input. */
 class AlfredTVBehaviour extends AlfredTVBase

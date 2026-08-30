@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alfred\Workflow\AlfredAdapter\Type;
+namespace Alfred\Workflow\AlfredAdapter\Types;
 
 /** Icon displayed alongside an Alfred result. */
 class AlfredSFItemIcon extends AlfredSFBase

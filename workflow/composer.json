@@ -29,7 +29,6 @@
   },
   "autoload": {
     "psr-4": {
-      "Alfred\\Workflow\\AlfredAdapter\\Type\\": "src/AlfredAdapter/types/",
       "Alfred\\Workflow\\": "src/"
     }
   }

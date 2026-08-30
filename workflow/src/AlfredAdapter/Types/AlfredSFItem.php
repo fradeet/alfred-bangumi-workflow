@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alfred\Workflow\AlfredAdapter\Type;
+namespace Alfred\Workflow\AlfredAdapter\Types;
 
 /** A single result row in an Alfred Script Filter response. */
 class AlfredSFItem extends AlfredSFBase

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alfred\Workflow\AlfredAdapter\Type;
+namespace Alfred\Workflow\AlfredAdapter\Types;
 
 /** Typed Universal Action content for an Alfred result. */
 class AlfredSFItemAction extends AlfredSFBase
