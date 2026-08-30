@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alfred\Workflow\AlfredAdapter;
+namespace Alfred\Workflow\AlfredAdapter\Type;
 
 /** Where a Text View scrolls after receiving a response. */
 enum AlfredTVBehaviourScroll: string

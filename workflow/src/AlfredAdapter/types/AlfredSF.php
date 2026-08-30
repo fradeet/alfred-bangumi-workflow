@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alfred\Workflow\AlfredAdapter;
+namespace Alfred\Workflow\AlfredAdapter\Type;
 
 /** Top-level response returned by an Alfred Script Filter. */
 class AlfredSF extends AlfredSFBase

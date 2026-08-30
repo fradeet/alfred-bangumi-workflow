@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Alfred\Workflow\AlfredAdapter;
 
+use Alfred\Workflow\AlfredAdapter\Type\AlfredTV;
+use Alfred\Workflow\AlfredAdapter\Type\AlfredTVBehaviour;
+use Alfred\Workflow\AlfredAdapter\Type\AlfredTVBehaviourResponse;
+use Alfred\Workflow\AlfredAdapter\Type\AlfredTVBehaviourScroll;
 use Alfred\Workflow\BangumiSdk\Dto\InfoboxValue;
 use Alfred\Workflow\BangumiSdk\Dto\Subject;
 use Alfred\Workflow\BangumiSdk\Enums\SubjectType;

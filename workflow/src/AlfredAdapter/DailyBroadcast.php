@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Alfred\Workflow\AlfredAdapter;
 
+use Alfred\Workflow\AlfredAdapter\Type\AlfredSF;
+use Alfred\Workflow\AlfredAdapter\Type\AlfredSFCache;
+use Alfred\Workflow\AlfredAdapter\Type\AlfredSFItem;
+use Alfred\Workflow\AlfredAdapter\Type\AlfredSFItemIcon;
+use Alfred\Workflow\AlfredAdapter\Type\AlfredSFItemText;
 use Alfred\Workflow\BangumiSdk\Dto\LegacySubjectSmall;
 use Alfred\Workflow\BangumiSiteUrl;
 use Alfred\Workflow\DailyBroadcast as DailyBroadcastCore;

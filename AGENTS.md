@@ -14,7 +14,7 @@ Alfred -> operation-specific Alfred adapter -> core class
 - Provide one adapter for each business operation that Alfred can invoke. Use a PascalCase filename matching the operation, for example `workflow/src/AlfredAdapter/DailyBroadcast.php`.
 - Make each adapter directly executable with a PHP shebang so Alfred can use it as an External Script input file.
 - Read Alfred user input and Alfred environment variables in the operation's adapter. Do not use a shared CLI task dispatcher.
-- Keep reusable Alfred response value objects in `workflow/src/AlfredAdapter/types/` and the `Alfred\Workflow\AlfredAdapter` namespace, and follow PSR-4: each class name must match its filename.
+- Keep reusable Alfred response value objects in `workflow/src/AlfredAdapter/types/` and the `Alfred\Workflow\AlfredAdapter\Type` namespace, and follow PSR-4: each class name must match its filename.
 - Call core classes from the adapter and convert their plain PHP return values into the format Alfred requires.
 - Encode JSON with `JSON_THROW_ON_ERROR` and write only the Alfred response to standard output. Send diagnostics to standard error.
 - Catch operation failures, return valid JSON for that adapter's Alfred object type, and exit with a non-zero status.
