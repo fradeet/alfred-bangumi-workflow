@@ -88,10 +88,7 @@ function subjectRelationsResponse(string $subjectUrl, string $cacheDirectory, st
         );
     }
 
-    return new AlfredSF(
-        items: $items,
-        skipknowledge: true,
-    );
+    return new AlfredSF(items: $items);
 }
 
 function subjectRelationsTypeName(SubjectType $type): string

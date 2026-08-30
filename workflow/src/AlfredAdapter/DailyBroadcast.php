@@ -115,7 +115,6 @@ function dailyBroadcastResponse(string $cacheDirectory, string $siteDomain): Alf
     return new AlfredSF(
         items: $items,
         cache: new AlfredSFCache(seconds: 43200, loosereload: true),
-        skipknowledge: true,
     );
 }
 
