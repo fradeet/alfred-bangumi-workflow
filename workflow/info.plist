@@ -104,7 +104,7 @@
 				<key>inputtype</key>
 				<integer>1</integer>
 				<key>loadingtext</key>
-				<string></string>
+				<string>Loading...</string>
 				<key>outputmode</key>
 				<integer>0</integer>
 				<key>scriptinput</key>
