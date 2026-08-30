@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 namespace Alfred\Workflow\AlfredAdapter;
 
+use Alfred\Workflow\AlfredAdapter\Support\JsonEncoder;
 use Alfred\Workflow\AlfredAdapter\Type\AlfredTV;
 use Alfred\Workflow\AlfredAdapter\Type\AlfredTVBehaviour;
 use Alfred\Workflow\AlfredAdapter\Type\AlfredTVBehaviourResponse;
@@ -182,21 +183,14 @@ function subjectDetailsEscapeMarkdown(string $value): string
     );
 }
 
-/** Encode an Alfred response without escaping URLs or Unicode. */
-function subjectDetailsJson(AlfredTV $response): string
-{
-    return json_encode(
-        $response,
-        JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
-    );
-}
+$jsonEncoder = new JsonEncoder();
 
 try {
-    echo subjectDetailsJson(subjectDetailsResponse(subjectDetailsInput()));
+    echo $jsonEncoder(subjectDetailsResponse(subjectDetailsInput()));
 } catch (\Throwable $exception) {
     fwrite(STDERR, $exception.PHP_EOL);
 
-    echo subjectDetailsJson(new AlfredTV(
+    echo $jsonEncoder(new AlfredTV(
         response: 'Unable to load subject details. Open the debugger and try again.',
         footer: 'Bangumi · Error',
         actionoutput: false,

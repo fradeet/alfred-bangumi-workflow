@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 namespace Alfred\Workflow\AlfredAdapter;
 
+use Alfred\Workflow\AlfredAdapter\Support\JsonEncoder;
 use Alfred\Workflow\AlfredAdapter\Type\AlfredSF;
 use Alfred\Workflow\AlfredAdapter\Type\AlfredSFCache;
 use Alfred\Workflow\AlfredAdapter\Type\AlfredSFItem;
@@ -118,25 +119,18 @@ function dailyBroadcastResponse(string $cacheDirectory, string $siteDomain): Alf
     );
 }
 
-/** Encode an Alfred response without escaping URLs or Unicode. */
-function dailyBroadcastJson(AlfredSF $response): string
-{
-    return json_encode(
-        $response,
-        JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
-    );
-}
+$jsonEncoder = new JsonEncoder();
 
 try {
     $defaultCacheDirectory = sys_get_temp_dir().'/com.fradeet.bangumitv';
     $cacheDirectory = dailyBroadcastEnvironment('alfred_workflow_cache', $defaultCacheDirectory);
     $siteDomain = dailyBroadcastEnvironment('BGM_SITE_DOMAIN', 'https://bgm.tv/');
 
-    echo dailyBroadcastJson(dailyBroadcastResponse($cacheDirectory, $siteDomain));
+    echo $jsonEncoder(dailyBroadcastResponse($cacheDirectory, $siteDomain));
 } catch (\Throwable $exception) {
     fwrite(STDERR, $exception.PHP_EOL);
 
-    echo dailyBroadcastJson(new AlfredSF(
+    echo $jsonEncoder(new AlfredSF(
         items: [
             new AlfredSFItem(
                 title: 'Unable to Load Results',
