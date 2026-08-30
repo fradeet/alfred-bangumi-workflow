@@ -67,7 +67,7 @@
 				<key>imageaspect</key>
 				<integer>1</integer>
 				<key>inputfile</key>
-				<string>alfred_run_daily_broadcast.sh</string>
+				<string>src/AlfredAdapter/DailyBroadcast.php</string>
 				<key>inputtype</key>
 				<integer>1</integer>
 				<key>loadingtext</key>
@@ -100,7 +100,7 @@
 				<key>footertext</key>
 				<string></string>
 				<key>inputfile</key>
-				<string>alfred_run_subject_details.sh</string>
+				<string>src/AlfredAdapter/SubjectDetails.php</string>
 				<key>inputtype</key>
 				<integer>1</integer>
 				<key>loadingtext</key>

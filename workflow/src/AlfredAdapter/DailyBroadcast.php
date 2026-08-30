@@ -1,0 +1,144 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Alfred\Workflow\AlfredAdapter;
+
+use Alfred\Workflow\BangumiSdk\Dto\LegacySubjectSmall;
+use Alfred\Workflow\BangumiSiteUrl;
+use Alfred\Workflow\DailyBroadcast as DailyBroadcastCore;
+use Alfred\Workflow\ImageCache;
+
+error_reporting(E_ALL);
+ini_set('display_errors', 'stderr');
+
+require dirname(__DIR__, 2).'/vendor/autoload.php';
+
+/** Return the environment value or its fallback when unset or empty. */
+function dailyBroadcastEnvironment(string $name, string $fallback): string
+{
+    $value = getenv($name);
+
+    return false === $value || '' === $value ? $fallback : $value;
+}
+
+/**
+ * Return subject fields required to build an Alfred item.
+ *
+ * @return array{id: int, url: string, name: string}
+ */
+function dailyBroadcastRequiredSubjectFields(LegacySubjectSmall $subject): array
+{
+    if (
+        null === $subject->id
+        || null === $subject->url
+        || '' === $subject->url
+        || null === $subject->name
+        || '' === $subject->name
+    ) {
+        throw new \RuntimeException('Bangumi returned an incomplete subject.');
+    }
+
+    return [
+        'id' => $subject->id,
+        'url' => $subject->url,
+        'name' => $subject->name,
+    ];
+}
+
+/** Fetch the daily schedule and adapt it to Alfred Script Filter items. */
+function dailyBroadcastResponse(string $cacheDirectory, string $siteDomain): AlfredSF
+{
+    $schedule = (new DailyBroadcastCore())();
+    $weekday = $schedule->weekday->cn;
+    $imageUrls = [];
+
+    foreach ($schedule->items as $subject) {
+        $subjectFields = dailyBroadcastRequiredSubjectFields($subject);
+        $imageUrls[$subjectFields['id']] = $subject->images->common ?? '';
+    }
+
+    $imagePaths = (new ImageCache())->cache($imageUrls, $cacheDirectory);
+    $buildSiteUrl = new BangumiSiteUrl();
+    $items = [];
+
+    foreach ($schedule->items as $subject) {
+        $subjectFields = dailyBroadcastRequiredSubjectFields($subject);
+        $nameCn = $subject->name_cn ?? '';
+        $title = '' !== $nameCn ? $nameCn : $subjectFields['name'];
+        $details = [];
+
+        if ($title !== $subjectFields['name']) {
+            $details[] = $subjectFields['name'];
+        }
+
+        if (null !== $subject->rating?->score && $subject->rating->score > 0) {
+            $details[] = sprintf('评分 %.1f', $subject->rating->score);
+        }
+
+        if (null !== $subject->eps && $subject->eps > 0) {
+            $details[] = sprintf('全 %d 话', $subject->eps);
+        }
+
+        if (null !== $subject->air_date && '' !== $subject->air_date) {
+            $details[] = sprintf('%s 开播', $subject->air_date);
+        }
+
+        $url = $buildSiteUrl($subjectFields['url'], $siteDomain);
+
+        $items[] = new AlfredSFItem(
+            title: $title,
+            arg: $url,
+            icon: isset($imagePaths[$subjectFields['id']]) ? new AlfredSFItemIcon($imagePaths[$subjectFields['id']]) : null,
+            match: $title.' '.$subjectFields['name'],
+            quicklookurl: $url,
+            subtitle: $weekday.([] === $details ? '' : ' · '.implode(' · ', $details)),
+            text: new AlfredSFItemText(copy: $title, largetype: $title),
+            uid: 'bangumi-subject-'.$subjectFields['id'],
+        );
+    }
+
+    if ([] === $items) {
+        $items[] = new AlfredSFItem(
+            title: $weekday.'暂无放送',
+            valid: false,
+        );
+    }
+
+    return new AlfredSF(
+        items: $items,
+        cache: new AlfredSFCache(seconds: 43200, loosereload: true),
+        skipknowledge: true,
+    );
+}
+
+/** Encode an Alfred response without escaping URLs or Unicode. */
+function dailyBroadcastJson(AlfredSF $response): string
+{
+    return json_encode(
+        $response,
+        JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
+    );
+}
+
+try {
+    $defaultCacheDirectory = sys_get_temp_dir().'/com.fradeet.bangumitv';
+    $cacheDirectory = dailyBroadcastEnvironment('alfred_workflow_cache', $defaultCacheDirectory);
+    $siteDomain = dailyBroadcastEnvironment('BGM_SITE_DOMAIN', 'https://bgm.tv/');
+
+    echo dailyBroadcastJson(dailyBroadcastResponse($cacheDirectory, $siteDomain));
+} catch (\Throwable $exception) {
+    fwrite(STDERR, $exception.PHP_EOL);
+
+    echo dailyBroadcastJson(new AlfredSF(
+        items: [
+            new AlfredSFItem(
+                title: 'Unable to Load Results',
+                subtitle: 'Open the debugger and try again',
+                valid: false,
+            ),
+        ],
+    ));
+
+    exit(1);
+}

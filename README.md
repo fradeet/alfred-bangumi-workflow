@@ -1,169 +1,82 @@
-# Alfred Workflow PHP Template
+# Alfred Bangumi Workflow
 
-A small PHP starter project for building Alfred Script Filter workflows. It keeps
-the workflow's core logic separate from Alfred-specific JSON and output handling.
+An Alfred workflow that lists today's Bangumi anime schedule and displays details for a selected subject. The project separates Alfred-specific adapters from reusable core logic:
+
+```text
+Alfred -> operation-specific PHP adapter -> core class
+```
 
 ## Requirements
 
 - macOS with [Alfred](https://www.alfredapp.com/)
-- PHP 8.4.1 or later
+- PHP 8.3 or later
 - [Composer](https://getcomposer.org/)
 
-## Installation
-
-### Create a repository from the GitHub template
-
-1. Open the
-   [template repository](https://github.com/fradeet/alfred-workflow-php-template).
-2. Select **Use this template**, then **Create a new repository**.
-3. Clone your new repository and enter its directory:
-
-   ```bash
-   git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-   cd YOUR-REPOSITORY
-   ```
-
-4. Install the workflow dependencies:
-
-   ```bash
-   composer install --working-dir=workflow
-   ```
-
-### Create a project with Composer
-
-Once the package is available on Packagist, create a project with:
+Install the workflow dependencies after cloning the repository:
 
 ```bash
-composer create-project fradeet/alfred-workflow-php-template my-alfred-workflow
-cd my-alfred-workflow
 composer install --working-dir=workflow
 ```
 
-## Daily Bangumi broadcasts
+## Run the workflow operations
 
-Run the daily broadcast Script Filter to list today's anime. Selecting a result
-passes its Bangumi subject URL to a Text View, which requests and displays the
-subject details as Markdown. The workflow determines the current weekday from
-the local system date automatically. Common-size cover images are cached under
-Alfred's `alfred_workflow_cache` directory and reused on later runs. Cached
-covers expire after 365 days and are removed automatically:
+Run the daily broadcast Adapter directly:
 
 ```bash
-./workflow/alfred_run_daily_broadcast.sh
+workflow/src/AlfredAdapter/DailyBroadcast.php
 ```
 
-You can also invoke the PHP adapter directly, passing the cache directory and
-Bangumi site domain explicitly:
+It reads the cover cache directory from `alfred_workflow_cache` and the selected Bangumi mirror from `BGM_SITE_DOMAIN`. When unavailable, they default to the system temporary directory and `https://bgm.tv/` respectively.
+
+Fetch details for a subject URL:
 
 ```bash
-php workflow/AlfredAdapter.php daily-broadcast /tmp/alfred-bangumi-cache https://bgm.tv/
+workflow/src/AlfredAdapter/SubjectDetails.php https://bgm.tv/subject/424883
 ```
 
-Fetch a subject by the public URL produced by the daily broadcast operation:
+Each Adapter writes the JSON expected by its Alfred object to standard output: Script Filter JSON for daily broadcasts and Text View JSON for subject details. PHP diagnostics go to standard error so they do not corrupt Alfred's input. Failures produce valid JSON for the corresponding Alfred object and return a non-zero exit status.
+
+The bundled `workflow/info.plist` configures the Grid and Text View objects to use these executable PHP files directly.
+
+## Project structure
+
+- Put each executable Alfred business Adapter in `workflow/src/AlfredAdapter/`, with one PascalCase PHP file per operation.
+- Read Alfred inputs and environment variables in the relevant Adapter. There is no shared CLI task dispatcher.
+- Keep Alfred JSON response value objects in the `Alfred\Workflow\AlfredAdapter` namespace.
+- Keep Alfred-independent business logic in `workflow/src/` under the `Alfred\Workflow` namespace. Core classes accept explicit inputs and return plain PHP values.
+- Load all classes through `workflow/vendor/autoload.php`; do not require individual core source files.
+
+After adding or renaming a class, refresh Composer's autoloader:
 
 ```bash
-./workflow/alfred_run_subject_details.sh https://bgm.tv/subject/424883
+composer dump-autoload --working-dir=workflow
 ```
-
-You can also invoke the Text View adapter task directly:
-
-```bash
-php workflow/AlfredAdapter.php subject-details https://bgm.tv/subject/424883
-```
-
-Each adapter command writes the JSON expected by its corresponding Alfred
-object to standard output: Script Filter JSON for daily broadcasts and Text
-View JSON for subject details. PHP warnings and other displayed diagnostics are
-written to standard error so they do not corrupt Alfred's JSON input.
-
-In Alfred, add a Script Filter and call the runner without passing `{query}`:
-
-```bash
-"$PWD/workflow/alfred_run_daily_broadcast.sh"
-```
-
-CLI usage and task errors are also returned as Alfred Script Filter JSON, with
-a non-zero exit status. For example, an unknown task outputs:
-
-```json
-{"items":[{"title":"Unknown task: unknown"}]}
-```
-
-## Connect it to Alfred
-
-Create a workflow in Alfred and add a **Script Filter** object. Choose
-`/bin/bash` as the language and use the included runner script:
-
-```bash
-"$PWD/workflow/alfred_run_daily_broadcast.sh"
-```
-
-Alternatively, run the PHP adapter directly:
-
-```bash
-php "$PWD/workflow/AlfredAdapter.php" daily-broadcast \
-  "$alfred_workflow_cache" "$BGM_SITE_DOMAIN"
-```
-
-Connect the Script Filter or Grid View to a script-source **Text View**. Use
-`alfred_run_subject_details.sh` as the Text View's input file, enable Markdown
-preview, and pass the selected result URL as its input.
-
-The adapter uses positional CLI arguments. The first argument selects the task,
-and all remaining arguments are forwarded to that task:
 
 ## Package the workflow
 
-Package the contents of `workflow/` as an Alfred workflow from the repository
-root:
+Package the contents of `workflow/` as an Alfred workflow from the repository root:
 
 ```bash
 ./workflow-packager
 ```
 
-The command reads the workflow name from `workflow/info.plist` and creates
-`<workflow-name>.alfredworkflow` in the repository root. Generated workflow
-packages are ignored by Git. To choose another destination, pass the complete
-output path:
+The command reads the workflow name from `workflow/info.plist` and creates `<workflow-name>.alfredworkflow` in the repository root. To choose another destination, pass the complete output path; its parent directory must already exist:
 
 ```bash
 ./workflow-packager build/bangumi.alfredworkflow
 ```
 
-The destination directory must already exist. If Composer development
-dependencies are installed in `workflow/vendor`, the packager first runs
-`composer install --no-dev` in `workflow/` so they are not included in the
-package. The remaining packaging happens from a temporary copy, where
-`.DS_Store` files are removed and variables listed in `variablesdontexport` are
-cleared without modifying their source files.
-
-## Customize the workflow
-
-- Add one `workflow/alfred_run_<operation>.sh` script for each operation exposed
-  to Alfred. Read Alfred user data and environment variables in these scripts,
-  then forward the values through `workflow/AlfredAdapter.php`.
-- Use `workflow/AlfredAdapter.php` as the single gateway for all runner scripts.
-  Keep Alfred-specific PHP functions, core calls, result adaptation, JSON
-  encoding, and standard output handling there.
-- Put Alfred-independent business logic in `workflow/src/` under the
-  `Alfred\Workflow` namespace. Core classes should accept explicit inputs and
-  return plain PHP values.
-- After adding or renaming a core class, refresh Composer's autoloader:
-
-  ```bash
-  composer dump-autoload --working-dir=workflow
-  ```
+If Composer development dependencies are installed, the packager removes them from the packaged copy. It also clears workflow variables listed in `variablesdontexport` without changing the source files.
 
 ## Development checks
 
-Run the workflow and the project checks before committing changes:
-
 ```bash
-workflow/alfred_run_daily_broadcast.sh
-workflow/alfred_run_subject_details.sh https://bgm.tv/subject/424883
-cd workflow
-vendor/bin/phpstan analyse src AlfredAdapter.php --no-progress
-vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no
+find workflow -name '*.php' -not -path 'workflow/vendor/*' -exec php -l {} \;
+workflow/src/AlfredAdapter/DailyBroadcast.php
+workflow/src/AlfredAdapter/SubjectDetails.php https://bgm.tv/subject/424883
+(cd workflow && vendor/bin/phpstan analyse src --no-progress)
+(cd workflow && vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no --sequential)
+plutil -lint workflow/info.plist
 ```
 
 ## License
