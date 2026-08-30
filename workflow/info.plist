@@ -70,6 +70,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>45BDF43B-E681-4006-B974-59EE745F8BDB</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D7CDFF11-8B19-4679-BEDE-B33AD5527EA6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>52B547F0-F78A-4F25-8A22-6C1792AB58DE</key>
 		<array>
 			<dict>
@@ -603,7 +616,7 @@
 		<key>D7CDFF11-8B19-4679-BEDE-B33AD5527EA6</key>
 		<dict>
 			<key>xpos</key>
-			<real>1170</real>
+			<real>1370</real>
 			<key>ypos</key>
 			<real>215</real>
 		</dict>
@@ -709,7 +722,7 @@
 		</dict>
 	</array>
 	<key>version</key>
-	<string>0.1.0</string>
+	<string>0.1.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/fradeet/alfred-bangumi-workflow</string>
 </dict>
