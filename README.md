@@ -1,6 +1,6 @@
 # Alfred Bangumi Workflow
 
-An Alfred workflow that lists today's Bangumi anime schedule and displays details for a selected subject. The project separates Alfred-specific adapters from reusable core logic:
+An Alfred workflow that lists today's Bangumi anime schedule, browses every anime in the current calendar, and displays details for a selected subject. The project separates Alfred-specific adapters from reusable core logic:
 
 ```text
 Alfred -> operation-specific PHP adapter -> core class
@@ -26,6 +26,12 @@ Run the daily broadcast Adapter directly:
 workflow/src/AlfredAdapter/DailyBroadcast.php
 ```
 
+List all anime in the current Bangumi calendar:
+
+```bash
+workflow/src/AlfredAdapter/SeasonalAnime.php
+```
+
 It reads the cover cache directory from `alfred_workflow_cache` and the selected Bangumi mirror from `BGM_SITE_DOMAIN`. When unavailable, they default to the system temporary directory and `https://bgm.tv/` respectively.
 
 Fetch details for a subject URL:
@@ -34,7 +40,7 @@ Fetch details for a subject URL:
 workflow/src/AlfredAdapter/SubjectDetails.php https://bgm.tv/subject/424883
 ```
 
-Each Adapter writes the JSON expected by its Alfred object to standard output: Script Filter JSON for daily broadcasts and Text View JSON for subject details. PHP diagnostics go to standard error so they do not corrupt Alfred's input. Failures produce valid JSON for the corresponding Alfred object and return a non-zero exit status.
+Each Adapter writes the JSON expected by its Alfred object to standard output: Script Filter JSON for daily broadcasts and seasonal anime, and Text View JSON for subject details. PHP diagnostics go to standard error so they do not corrupt Alfred's input. Failures produce valid JSON for the corresponding Alfred object and return a non-zero exit status.
 
 The bundled `workflow/info.plist` configures the Grid and Text View objects to use these executable PHP files directly.
 
@@ -73,6 +79,7 @@ If Composer development dependencies are installed, the packager removes them fr
 ```bash
 find workflow -name '*.php' -not -path 'workflow/vendor/*' -exec php -l {} \;
 workflow/src/AlfredAdapter/DailyBroadcast.php
+workflow/src/AlfredAdapter/SeasonalAnime.php
 workflow/src/AlfredAdapter/SubjectDetails.php https://bgm.tv/subject/424883
 (cd workflow && vendor/bin/phpstan analyse src --no-progress)
 (cd workflow && vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no --sequential)
