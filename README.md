@@ -39,29 +39,6 @@ cd my-alfred-workflow
 composer install --working-dir=workflow
 ```
 
-## Run the example
-
-Use the included Alfred runner script:
-
-```bash
-./workflow/alfred_run_hello.sh
-```
-
-You can also invoke the PHP adapter directly:
-
-```bash
-php workflow/AlfredAdapter.php hello
-```
-
-The command writes valid Alfred Script Filter JSON to standard output:
-
-```json
-{"items":[{"title":"Hello Alfred"}]}
-```
-
-PHP warnings and other displayed diagnostics are written to standard error so
-they do not corrupt Alfred's JSON input.
-
 ## Daily Bangumi broadcasts
 
 Run the daily broadcast Script Filter to list today's anime. Selecting a result
@@ -73,6 +50,17 @@ later runs. Cached covers expire after 365 days and are removed automatically:
 ```bash
 ./workflow/alfred_run_daily_broadcast.sh
 ```
+
+You can also invoke the PHP adapter directly, passing the cache directory and
+Bangumi site domain explicitly:
+
+```bash
+php workflow/AlfredAdapter.php daily-broadcast /tmp/alfred-bangumi-cache https://bgm.tv/
+```
+
+The command writes valid Alfred Script Filter JSON to standard output. PHP
+warnings and other displayed diagnostics are written to standard error so they
+do not corrupt Alfred's JSON input.
 
 In Alfred, add a Script Filter and call the runner without passing `{query}`:
 
@@ -93,26 +81,20 @@ Create a workflow in Alfred and add a **Script Filter** object. Choose
 `/bin/bash` as the language and use the included runner script:
 
 ```bash
-"$PWD/workflow/alfred_run_hello.sh"
+"$PWD/workflow/alfred_run_daily_broadcast.sh"
 ```
 
 Alternatively, run the PHP adapter directly:
 
 ```bash
-php "$PWD/workflow/AlfredAdapter.php" hello
+php "$PWD/workflow/AlfredAdapter.php" daily-broadcast \
+  "$alfred_workflow_cache" "$BGM_SITE_DOMAIN"
 ```
 
 Connect the Script Filter to the actions needed by your workflow.
 
 The adapter uses positional CLI arguments. The first argument selects the task,
 and all remaining arguments are forwarded to that task:
-
-```bash
-php workflow/AlfredAdapter.php hello Ada Lovelace
-./workflow/alfred_run_hello.sh Ada Lovelace
-```
-
-Both commands output `{"items":[{"title":"Hello Ada Lovelace"}]}`.
 
 ## Package the workflow
 
@@ -129,7 +111,7 @@ packages are ignored by Git. To choose another destination, pass the complete
 output path:
 
 ```bash
-./workflow-packager build/hello.alfredworkflow
+./workflow-packager build/bangumi.alfredworkflow
 ```
 
 The destination directory must already exist. If Composer development
@@ -158,10 +140,10 @@ cleared without modifying their source files.
 
 ## Development checks
 
-Run the example and the project checks before committing changes:
+Run the workflow and the project checks before committing changes:
 
 ```bash
-workflow/alfred_run_hello.sh
+workflow/alfred_run_daily_broadcast.sh
 cd workflow
 vendor/bin/phpstan analyse src AlfredAdapter.php --no-progress
 vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no

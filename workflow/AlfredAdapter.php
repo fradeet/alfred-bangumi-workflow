@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Alfred\Workflow\BangumiSdk\Dto\LegacySubjectSmall;
 use Alfred\Workflow\BangumiSiteUrl;
 use Alfred\Workflow\DailyBroadcast;
-use Alfred\Workflow\Hello;
 use Alfred\Workflow\ImageCache;
 
 error_reporting(E_ALL);
@@ -23,9 +22,6 @@ require __DIR__.'/AlfredScriptFilterType.php';
 function dispatchTask(string $task, array $arguments): AlfredSF
 {
     return match ($task) {
-        'hello' => new AlfredSF(
-            items: [new AlfredSFItem(title: (new Hello())(...$arguments))],
-        ),
         'daily-broadcast' => dailyBroadcast($arguments),
         default => throw new InvalidArgumentException(sprintf('Unknown task: %s', $task)),
     };
