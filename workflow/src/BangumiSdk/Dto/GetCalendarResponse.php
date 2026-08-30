@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Alfred\Workflow\BangumiSdk\Dto;
 
+use Alfred\Workflow\BangumiSdk\Enums\SubjectType;
+
 /**
  * A single daily schedule in the response returned by GET /calendar.
  *
@@ -56,9 +58,10 @@ class GetCalendarResponse
     /** @param array<mixed> $data */
     private static function createSubject(array $data): LegacySubjectSmall
     {
-        $type = self::optionalInt($data, 'type');
+        $typeValue = self::optionalInt($data, 'type');
+        $type = null === $typeValue ? null : SubjectType::tryFrom($typeValue);
 
-        if (null !== $type && !in_array($type, [1, 2, 3, 4, 6], true)) {
+        if (null !== $typeValue && null === $type) {
             throw new \UnexpectedValueException('Calendar subject field "type" is invalid.');
         }
 
