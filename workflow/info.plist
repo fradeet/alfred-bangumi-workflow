@@ -12,11 +12,21 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>D5FE9461-440A-4624-8C11-1B49EBA64306</string>
+				<string>8EBA7AE5-4055-41B4-8EF3-8891BCA20F23</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>D5FE9461-440A-4624-8C11-1B49EBA64306</string>
+				<key>modifiers</key>
+				<integer>524288</integer>
+				<key>modifiersubtext</key>
+				<string>Open in browser</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -81,21 +91,33 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>browser</key>
+				<key>behaviour</key>
+				<integer>2</integer>
+				<key>fontmode</key>
+				<integer>0</integer>
+				<key>fontsizing</key>
+				<integer>0</integer>
+				<key>footertext</key>
 				<string></string>
-				<key>skipqueryencode</key>
-				<false/>
-				<key>skipvarencode</key>
-				<false/>
-				<key>spaces</key>
+				<key>inputfile</key>
+				<string>alfred_run_subject_details.sh</string>
+				<key>inputtype</key>
+				<integer>1</integer>
+				<key>loadingtext</key>
 				<string></string>
-				<key>url</key>
-				<string>{query}</string>
+				<key>outputmode</key>
+				<integer>0</integer>
+				<key>scriptinput</key>
+				<integer>0</integer>
+				<key>spellchecking</key>
+				<integer>0</integer>
+				<key>stackview</key>
+				<false/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.openurl</string>
+			<string>alfred.workflow.userinterface.text</string>
 			<key>uid</key>
-			<string>D5FE9461-440A-4624-8C11-1B49EBA64306</string>
+			<string>8EBA7AE5-4055-41B4-8EF3-8891BCA20F23</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -120,6 +142,27 @@
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>D5FE9461-440A-4624-8C11-1B49EBA64306</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -132,12 +175,19 @@
 			<key>ypos</key>
 			<real>35</real>
 		</dict>
+		<key>8EBA7AE5-4055-41B4-8EF3-8891BCA20F23</key>
+		<dict>
+			<key>xpos</key>
+			<real>470</real>
+			<key>ypos</key>
+			<real>35</real>
+		</dict>
 		<key>D5FE9461-440A-4624-8C11-1B49EBA64306</key>
 		<dict>
 			<key>xpos</key>
-			<real>465</real>
+			<real>470</real>
 			<key>ypos</key>
-			<real>35</real>
+			<real>150</real>
 		</dict>
 		<key>FCE893BB-5D54-4BDE-9357-AD27832C652D</key>
 		<dict>

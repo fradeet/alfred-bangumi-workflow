@@ -42,10 +42,11 @@ composer install --working-dir=workflow
 ## Daily Bangumi broadcasts
 
 Run the daily broadcast Script Filter to list today's anime. Selecting a result
-passes its Bangumi subject URL to the next Alfred action. The workflow determines
-the current weekday from the local system date automatically. Common-size cover
-images are cached under Alfred's `alfred_workflow_cache` directory and reused on
-later runs. Cached covers expire after 365 days and are removed automatically:
+passes its Bangumi subject URL to a Text View, which requests and displays the
+subject details as Markdown. The workflow determines the current weekday from
+the local system date automatically. Common-size cover images are cached under
+Alfred's `alfred_workflow_cache` directory and reused on later runs. Cached
+covers expire after 365 days and are removed automatically:
 
 ```bash
 ./workflow/alfred_run_daily_broadcast.sh
@@ -58,9 +59,22 @@ Bangumi site domain explicitly:
 php workflow/AlfredAdapter.php daily-broadcast /tmp/alfred-bangumi-cache https://bgm.tv/
 ```
 
-The command writes valid Alfred Script Filter JSON to standard output. PHP
-warnings and other displayed diagnostics are written to standard error so they
-do not corrupt Alfred's JSON input.
+Fetch a subject by the public URL produced by the daily broadcast operation:
+
+```bash
+./workflow/alfred_run_subject_details.sh https://bgm.tv/subject/424883
+```
+
+You can also invoke the Text View adapter task directly:
+
+```bash
+php workflow/AlfredAdapter.php subject-details https://bgm.tv/subject/424883
+```
+
+Each adapter command writes the JSON expected by its corresponding Alfred
+object to standard output: Script Filter JSON for daily broadcasts and Text
+View JSON for subject details. PHP warnings and other displayed diagnostics are
+written to standard error so they do not corrupt Alfred's JSON input.
 
 In Alfred, add a Script Filter and call the runner without passing `{query}`:
 
@@ -91,7 +105,9 @@ php "$PWD/workflow/AlfredAdapter.php" daily-broadcast \
   "$alfred_workflow_cache" "$BGM_SITE_DOMAIN"
 ```
 
-Connect the Script Filter to the actions needed by your workflow.
+Connect the Script Filter or Grid View to a script-source **Text View**. Use
+`alfred_run_subject_details.sh` as the Text View's input file, enable Markdown
+preview, and pass the selected result URL as its input.
 
 The adapter uses positional CLI arguments. The first argument selects the task,
 and all remaining arguments are forwarded to that task:
@@ -144,6 +160,7 @@ Run the workflow and the project checks before committing changes:
 
 ```bash
 workflow/alfred_run_daily_broadcast.sh
+workflow/alfred_run_subject_details.sh https://bgm.tv/subject/424883
 cd workflow
 vendor/bin/phpstan analyse src AlfredAdapter.php --no-progress
 vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no
