@@ -3,6 +3,7 @@
   "description": "For create Alfred workflow easily",
   "type": "project",
   "require": {
+    "ext-curl": "*",
     "php": ">=8.3",
     "saloonphp/saloon": "^4.0"
   },
