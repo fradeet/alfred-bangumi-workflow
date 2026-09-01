@@ -6,12 +6,12 @@ declare(strict_types=1);
 namespace Alfred\Workflow\AlfredAdapter;
 
 use Alfred\Workflow\AlfredAdapter\Support\JsonEncoder;
+use Alfred\Workflow\AlfredAdapter\Support\WorkflowEnvironment;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSF;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFItem;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFItemIcon;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFItemText;
 use Alfred\Workflow\BangumiSdk\Connectors\BangumiConnector;
-use Alfred\Workflow\BangumiSdk\Connectors\BangumiConnectorFactory;
 use Alfred\Workflow\BangumiSdk\Enums\SubjectType;
 use Alfred\Workflow\BangumiSiteUrl;
 use Alfred\Workflow\ImageCache;
@@ -33,14 +33,6 @@ function subjectRelationsInput(): string
     }
 
     return $subjectUrl;
-}
-
-/** Return the environment value or its fallback when unset or empty. */
-function subjectRelationsEnvironment(string $name, string $fallback): string
-{
-    $value = getenv($name);
-
-    return false === $value || '' === $value ? $fallback : $value;
 }
 
 /** Fetch related subjects and adapt them to Alfred Grid items. */
@@ -107,14 +99,10 @@ function subjectRelationsTypeName(SubjectType $type): string
 $jsonEncoder = new JsonEncoder();
 
 try {
-    $defaultCacheDirectory = sys_get_temp_dir().'/com.fradeet.bangumitv';
-    $cacheDirectory = subjectRelationsEnvironment('alfred_workflow_cache', $defaultCacheDirectory);
-    $siteDomain = subjectRelationsEnvironment('BGM_SITE_DOMAIN', 'https://bgm.tv/');
+    $cacheDirectory = WorkflowEnvironment::cacheDirectory();
+    $siteDomain = WorkflowEnvironment::value('BGM_SITE_DOMAIN', 'https://bgm.tv/');
     $subjectUrl = subjectRelationsInput();
-    $connector = (new BangumiConnectorFactory())(
-        $cacheDirectory.'/saloon-responses',
-        cacheEnabled: '1' !== subjectRelationsEnvironment('alfred_debug', '0'),
-    );
+    $connector = WorkflowEnvironment::bangumiConnector();
 
     echo $jsonEncoder(subjectRelationsResponse($subjectUrl, $cacheDirectory, $siteDomain, $connector));
 } catch (\Throwable $exception) {

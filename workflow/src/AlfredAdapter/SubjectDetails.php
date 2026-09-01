@@ -6,12 +6,12 @@ declare(strict_types=1);
 namespace Alfred\Workflow\AlfredAdapter;
 
 use Alfred\Workflow\AlfredAdapter\Support\JsonEncoder;
+use Alfred\Workflow\AlfredAdapter\Support\WorkflowEnvironment;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredTV;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredTVBehaviour;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredTVBehaviourResponse;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredTVBehaviourScroll;
 use Alfred\Workflow\BangumiSdk\Connectors\BangumiConnector;
-use Alfred\Workflow\BangumiSdk\Connectors\BangumiConnectorFactory;
 use Alfred\Workflow\BangumiSdk\Dto\InfoboxValue;
 use Alfred\Workflow\BangumiSdk\Dto\Subject;
 use Alfred\Workflow\BangumiSdk\Enums\SubjectType;
@@ -33,14 +33,6 @@ function subjectDetailsInput(): string
     }
 
     return $subjectUrl;
-}
-
-/** Return the environment value or its fallback when unset or empty. */
-function subjectDetailsEnvironment(string $name, string $fallback): string
-{
-    $value = getenv($name);
-
-    return false === $value || '' === $value ? $fallback : $value;
 }
 
 /** Fetch a Bangumi subject and adapt it to an Alfred Text View. */
@@ -196,12 +188,7 @@ function subjectDetailsEscapeMarkdown(string $value): string
 $jsonEncoder = new JsonEncoder();
 
 try {
-    $defaultCacheDirectory = sys_get_temp_dir().'/com.fradeet.bangumitv';
-    $cacheDirectory = subjectDetailsEnvironment('alfred_workflow_cache', $defaultCacheDirectory);
-    $connector = (new BangumiConnectorFactory())(
-        $cacheDirectory.'/saloon-responses',
-        cacheEnabled: '1' !== subjectDetailsEnvironment('alfred_debug', '0'),
-    );
+    $connector = WorkflowEnvironment::bangumiConnector();
 
     echo $jsonEncoder(subjectDetailsResponse(subjectDetailsInput(), $connector));
 } catch (\Throwable $exception) {

@@ -6,13 +6,13 @@ declare(strict_types=1);
 namespace Alfred\Workflow\AlfredAdapter;
 
 use Alfred\Workflow\AlfredAdapter\Support\JsonEncoder;
+use Alfred\Workflow\AlfredAdapter\Support\WorkflowEnvironment;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSF;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFCache;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFItem;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFItemIcon;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFItemText;
 use Alfred\Workflow\BangumiSdk\Connectors\BangumiConnector;
-use Alfred\Workflow\BangumiSdk\Connectors\BangumiConnectorFactory;
 use Alfred\Workflow\BangumiSdk\Dto\LegacySubjectSmall;
 use Alfred\Workflow\BangumiSiteUrl;
 use Alfred\Workflow\DailyBroadcast as DailyBroadcastCore;
@@ -22,14 +22,6 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'stderr');
 
 require dirname(__DIR__, 2).'/vendor/autoload.php';
-
-/** Return the environment value or its fallback when unset or empty. */
-function dailyBroadcastEnvironment(string $name, string $fallback): string
-{
-    $value = getenv($name);
-
-    return false === $value || '' === $value ? $fallback : $value;
-}
 
 /**
  * Return subject fields required to build an Alfred item.
@@ -126,13 +118,9 @@ function dailyBroadcastResponse(
 $jsonEncoder = new JsonEncoder();
 
 try {
-    $defaultCacheDirectory = sys_get_temp_dir().'/com.fradeet.bangumitv';
-    $cacheDirectory = dailyBroadcastEnvironment('alfred_workflow_cache', $defaultCacheDirectory);
-    $siteDomain = dailyBroadcastEnvironment('BGM_SITE_DOMAIN', 'https://bgm.tv/');
-    $connector = (new BangumiConnectorFactory())(
-        $cacheDirectory.'/saloon-responses',
-        cacheEnabled: '1' !== dailyBroadcastEnvironment('alfred_debug', '0'),
-    );
+    $cacheDirectory = WorkflowEnvironment::cacheDirectory();
+    $siteDomain = WorkflowEnvironment::value('BGM_SITE_DOMAIN', 'https://bgm.tv/');
+    $connector = WorkflowEnvironment::bangumiConnector();
 
     echo $jsonEncoder(dailyBroadcastResponse($cacheDirectory, $siteDomain, $connector));
 } catch (\Throwable $exception) {
