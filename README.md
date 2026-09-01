@@ -1,6 +1,6 @@
 # Alfred Bangumi Workflow
 
-An Alfred workflow that lists today's Bangumi anime schedule, browses every anime in the current calendar, and displays details and related entries for a selected subject. The project separates Alfred-specific adapters from reusable core logic:
+An Alfred workflow that searches Bangumi subjects, characters, and persons; lists today's anime schedule; browses every anime in the current calendar; and displays details and related entries for a selected subject. The project separates Alfred-specific adapters from reusable core logic:
 
 ```text
 Alfred -> operation-specific PHP adapter -> core class
@@ -46,9 +46,19 @@ List entries related to a subject URL:
 workflow/src/AlfredAdapter/SubjectRelations.php https://bgm.tv/subject/424883
 ```
 
+Search subjects, characters, and persons:
+
+```bash
+workflow/src/AlfredAdapter/SubjectSearch.php '攻壳机动队'
+workflow/src/AlfredAdapter/CharacterSearch.php '草薙素子'
+workflow/src/AlfredAdapter/PersonSearch.php '坂本真绫'
+```
+
+The bundled workflow uses `bs`, `bc`, and `bp` as the default Alfred keywords for these searches. They can be changed in the workflow configuration. Selecting a subject opens its detail view; selecting a character or person opens the corresponding Bangumi page. Command-clicking a subject opens the existing command panel.
+
 Successful Bangumi GET responses are cached locally for eight hours by Saloon, using Symfony's filesystem cache backend. The cache is stored in `saloon-responses` below `alfred_workflow_cache`, or below the system temporary directory when Alfred does not provide one. Set `alfred_debug=1` to bypass the response cache while debugging. Cover images and Alfred's own Script Filter result cache remain separate.
 
-Each Adapter writes the JSON expected by its Alfred object to standard output: Script Filter JSON for daily broadcasts, seasonal anime, and subject relations, and Text View JSON for subject details. PHP diagnostics go to standard error so they do not corrupt Alfred's input. Failures produce valid JSON for the corresponding Alfred object and return a non-zero exit status.
+Each Adapter writes the JSON expected by its Alfred object to standard output: Script Filter JSON for searches, daily broadcasts, seasonal anime, and subject relations, and Text View JSON for subject details. PHP diagnostics go to standard error so they do not corrupt Alfred's input. Failures produce valid JSON for the corresponding Alfred object and return a non-zero exit status.
 
 The bundled `workflow/info.plist` configures the Grid and Text View objects to use these executable PHP files directly.
 
@@ -90,6 +100,9 @@ workflow/src/AlfredAdapter/DailyBroadcast.php
 workflow/src/AlfredAdapter/SeasonalAnime.php
 workflow/src/AlfredAdapter/SubjectDetails.php https://bgm.tv/subject/424883
 workflow/src/AlfredAdapter/SubjectRelations.php https://bgm.tv/subject/424883
+workflow/src/AlfredAdapter/SubjectSearch.php '攻壳机动队'
+workflow/src/AlfredAdapter/CharacterSearch.php '草薙素子'
+workflow/src/AlfredAdapter/PersonSearch.php '坂本真绫'
 (cd workflow && vendor/bin/phpstan analyse src --no-progress)
 (cd workflow && vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no --sequential)
 plutil -lint workflow/info.plist
