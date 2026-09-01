@@ -46,7 +46,7 @@ List entries related to a subject URL:
 workflow/src/AlfredAdapter/SubjectRelations.php https://bgm.tv/subject/424883
 ```
 
-Related-entry responses are cached locally for eight hours, keyed by subject ID and the selected Bangumi mirror. The cache is stored below `alfred_workflow_cache`, or the system temporary directory when Alfred does not provide one.
+Successful Bangumi GET responses are cached locally for eight hours by Saloon, using Symfony's filesystem cache backend. The cache is stored in `saloon-responses` below `alfred_workflow_cache`, or below the system temporary directory when Alfred does not provide one. Set `alfred_debug=1` to bypass the response cache while debugging. Cover images and Alfred's own Script Filter result cache remain separate.
 
 Each Adapter writes the JSON expected by its Alfred object to standard output: Script Filter JSON for daily broadcasts, seasonal anime, and subject relations, and Text View JSON for subject details. PHP diagnostics go to standard error so they do not corrupt Alfred's input. Failures produce valid JSON for the corresponding Alfred object and return a non-zero exit status.
 

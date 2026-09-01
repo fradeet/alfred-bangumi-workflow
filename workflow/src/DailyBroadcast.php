@@ -11,7 +11,7 @@ use Alfred\Workflow\BangumiSdk\Requests\GetCalendarRequest;
 /** Fetch today's schedule from Bangumi's legacy calendar endpoint. */
 final class DailyBroadcast
 {
-    public function __construct(private readonly BangumiConnector $connector = new BangumiConnector()) {}
+    public function __construct(private readonly BangumiConnector $connector) {}
 
     /**
      * Return today's broadcasts using the local system date.

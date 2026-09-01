@@ -11,6 +11,8 @@ use Alfred\Workflow\AlfredAdapter\Types\AlfredSFCache;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFItem;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFItemIcon;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFItemText;
+use Alfred\Workflow\BangumiSdk\Connectors\BangumiConnector;
+use Alfred\Workflow\BangumiSdk\Connectors\BangumiConnectorFactory;
 use Alfred\Workflow\BangumiSdk\Dto\LegacySubjectSmall;
 use Alfred\Workflow\BangumiSiteUrl;
 use Alfred\Workflow\ImageCache;
@@ -54,9 +56,12 @@ function seasonalAnimeRequiredSubjectFields(LegacySubjectSmall $subject): array
 }
 
 /** Fetch the seasonal anime and adapt them to Alfred Grid items. */
-function seasonalAnimeResponse(string $cacheDirectory, string $siteDomain): AlfredSF
-{
-    $subjects = (new SeasonalAnimeCore())();
+function seasonalAnimeResponse(
+    string $cacheDirectory,
+    string $siteDomain,
+    BangumiConnector $connector,
+): AlfredSF {
+    $subjects = (new SeasonalAnimeCore($connector))();
     $imageUrls = [];
 
     foreach ($subjects as $subject) {
@@ -127,8 +132,12 @@ try {
     $defaultCacheDirectory = sys_get_temp_dir().'/com.fradeet.bangumitv';
     $cacheDirectory = seasonalAnimeEnvironment('alfred_workflow_cache', $defaultCacheDirectory);
     $siteDomain = seasonalAnimeEnvironment('BGM_SITE_DOMAIN', 'https://bgm.tv/');
+    $connector = (new BangumiConnectorFactory())(
+        $cacheDirectory.'/saloon-responses',
+        cacheEnabled: '1' !== seasonalAnimeEnvironment('alfred_debug', '0'),
+    );
 
-    echo $jsonEncoder(seasonalAnimeResponse($cacheDirectory, $siteDomain));
+    echo $jsonEncoder(seasonalAnimeResponse($cacheDirectory, $siteDomain, $connector));
 } catch (\Throwable $exception) {
     fwrite(STDERR, $exception.PHP_EOL);
 

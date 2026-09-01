@@ -12,7 +12,7 @@ use Alfred\Workflow\BangumiSdk\Requests\GetRelatedSubjectsBySubjectIdRequest;
 final class SubjectRelations
 {
     public function __construct(
-        private readonly BangumiConnector $connector = new BangumiConnector(),
+        private readonly BangumiConnector $connector,
         private readonly SubjectIdFromUrl $subjectIdFromUrl = new SubjectIdFromUrl(),
     ) {}
 

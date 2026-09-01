@@ -3,9 +3,12 @@
   "description": "For create Alfred workflow easily",
   "type": "project",
   "require": {
-    "ext-curl": "*",
     "php": ">=8.3",
-    "saloonphp/saloon": "^4.0"
+    "ext-curl": "*",
+    "psr/simple-cache": "^3.0",
+    "saloonphp/cache-plugin": "^3.1",
+    "saloonphp/saloon": "^4.0",
+    "symfony/cache": "^7.4 || ^8.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.95",

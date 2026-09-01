@@ -10,6 +10,8 @@ use Alfred\Workflow\AlfredAdapter\Types\AlfredTV;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredTVBehaviour;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredTVBehaviourResponse;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredTVBehaviourScroll;
+use Alfred\Workflow\BangumiSdk\Connectors\BangumiConnector;
+use Alfred\Workflow\BangumiSdk\Connectors\BangumiConnectorFactory;
 use Alfred\Workflow\BangumiSdk\Dto\InfoboxValue;
 use Alfred\Workflow\BangumiSdk\Dto\Subject;
 use Alfred\Workflow\BangumiSdk\Enums\SubjectType;
@@ -33,10 +35,18 @@ function subjectDetailsInput(): string
     return $subjectUrl;
 }
 
-/** Fetch a Bangumi subject and adapt it to an Alfred Text View. */
-function subjectDetailsResponse(string $subjectUrl): AlfredTV
+/** Return the environment value or its fallback when unset or empty. */
+function subjectDetailsEnvironment(string $name, string $fallback): string
 {
-    $subject = (new SubjectDetailsCore())($subjectUrl);
+    $value = getenv($name);
+
+    return false === $value || '' === $value ? $fallback : $value;
+}
+
+/** Fetch a Bangumi subject and adapt it to an Alfred Text View. */
+function subjectDetailsResponse(string $subjectUrl, BangumiConnector $connector): AlfredTV
+{
+    $subject = (new SubjectDetailsCore($connector))($subjectUrl);
 
     return new AlfredTV(
         response: subjectDetailsMarkdown($subject, $subjectUrl),
@@ -186,7 +196,14 @@ function subjectDetailsEscapeMarkdown(string $value): string
 $jsonEncoder = new JsonEncoder();
 
 try {
-    echo $jsonEncoder(subjectDetailsResponse(subjectDetailsInput()));
+    $defaultCacheDirectory = sys_get_temp_dir().'/com.fradeet.bangumitv';
+    $cacheDirectory = subjectDetailsEnvironment('alfred_workflow_cache', $defaultCacheDirectory);
+    $connector = (new BangumiConnectorFactory())(
+        $cacheDirectory.'/saloon-responses',
+        cacheEnabled: '1' !== subjectDetailsEnvironment('alfred_debug', '0'),
+    );
+
+    echo $jsonEncoder(subjectDetailsResponse(subjectDetailsInput(), $connector));
 } catch (\Throwable $exception) {
     fwrite(STDERR, $exception.PHP_EOL);
 
