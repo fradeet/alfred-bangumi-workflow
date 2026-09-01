@@ -122,7 +122,7 @@ function seasonalAnimeResponse(
 
     return new AlfredSF(
         items: $items,
-        cache: new AlfredSFCache(seconds: 43200, loosereload: true),
+        cache: new AlfredSFCache(seconds: 43200),
     );
 }
 
