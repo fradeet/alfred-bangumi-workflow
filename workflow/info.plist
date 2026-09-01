@@ -8,6 +8,19 @@
 	<string>Internet</string>
 	<key>connections</key>
 	<dict>
+		<key>091DC072-2406-4782-A5FE-4E549D108BEA</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>8E7BEF35-CC2F-4844-977F-F0C09B0F480D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>276683FE-8E8A-4D13-A29A-B7AF1A4BA043</key>
 		<array>
 			<dict>
@@ -44,6 +57,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>379C74F0-E725-436D-8D5D-F2F93813460F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D7CDFF11-8B19-4679-BEDE-B33AD5527EA6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>3D4FE817-3B19-4727-B8F7-818DA776E91F</key>
 		<array>
 			<dict>
@@ -62,6 +88,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>45BDF43B-E681-4006-B974-59EE745F8BDB</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>4595F8D7-4C20-4E5C-BCD5-C1A0D22FBF13</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D7CDFF11-8B19-4679-BEDE-B33AD5527EA6</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -119,8 +158,44 @@
 				<false/>
 			</dict>
 		</array>
+		<key>8E7BEF35-CC2F-4844-977F-F0C09B0F480D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>8EBA7AE5-4055-41B4-8EF3-8891BCA20F23</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>33932D93-6610-41F6-B1DD-771D024735E3</string>
+				<key>modifiers</key>
+				<integer>262144</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>8EBA7AE5-4055-41B4-8EF3-8891BCA20F23</key>
 		<array/>
+		<key>9C7B99A8-60CA-435E-9868-3EE45113B233</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>379C74F0-E725-436D-8D5D-F2F93813460F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>A58ECFFD-0219-439E-ACC9-F78600AD4DE2</key>
 		<array>
 			<dict>
@@ -144,6 +219,32 @@
 				<string></string>
 				<key>sourceoutputuid</key>
 				<string>0D62C655-6C22-4333-A2D3-D3957A6BE56D</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>B3F4F6DB-B46E-435A-AF1E-AEE1EDEE7D37</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>091DC072-2406-4782-A5FE-4E549D108BEA</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>B41FEE45-9279-4C5B-A09E-161370B68289</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>4595F8D7-4C20-4E5C-BCD5-C1A0D22FBF13</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -201,21 +302,33 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>{var:TODAY_ANIME_KEYWORD}</string>
-				<key>subtext</key>
+				<key>columncount</key>
+				<integer>5</integer>
+				<key>filterable</key>
+				<false/>
+				<key>fixedorder</key>
+				<false/>
+				<key>imageaspect</key>
+				<integer>1</integer>
+				<key>inputfile</key>
+				<string>src/AlfredAdapter/DailyBroadcast.php</string>
+				<key>inputtype</key>
+				<integer>1</integer>
+				<key>loadingtext</key>
 				<string></string>
-				<key>text</key>
-				<string>Today Animes</string>
-				<key>withspace</key>
+				<key>showsubtitles</key>
+				<true/>
+				<key>showtitles</key>
+				<true/>
+				<key>subtitlesinfooter</key>
+				<true/>
+				<key>titlesinfooter</key>
 				<false/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
+			<string>alfred.workflow.userinterface.grid</string>
 			<key>uid</key>
-			<string>FCE893BB-5D54-4BDE-9357-AD27832C652D</string>
+			<string>6D3ACD68-A616-4E6E-9237-1DA63C7C5632</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -255,33 +368,50 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>columncount</key>
-				<integer>5</integer>
-				<key>filterable</key>
-				<false/>
-				<key>fixedorder</key>
-				<false/>
-				<key>imageaspect</key>
-				<integer>1</integer>
-				<key>inputfile</key>
-				<string>src/AlfredAdapter/DailyBroadcast.php</string>
-				<key>inputtype</key>
-				<integer>1</integer>
-				<key>loadingtext</key>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>{var:TODAY_ANIME_KEYWORD}</string>
+				<key>subtext</key>
 				<string></string>
-				<key>showsubtitles</key>
-				<true/>
-				<key>showtitles</key>
-				<true/>
-				<key>subtitlesinfooter</key>
-				<true/>
-				<key>titlesinfooter</key>
+				<key>text</key>
+				<string>Today Animes</string>
+				<key>withspace</key>
 				<false/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.userinterface.grid</string>
+			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
-			<string>6D3ACD68-A616-4E6E-9237-1DA63C7C5632</string>
+			<string>FCE893BB-5D54-4BDE-9357-AD27832C652D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>fixedorder</key>
+				<false/>
+				<key>items</key>
+				<string>[{"title":"Open in browser","arg":"open"},{"title":"View Relations","arg":"relations"}]</string>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string></string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.listfilter</string>
+			<key>uid</key>
+			<string>3D4FE817-3B19-4727-B8F7-818DA776E91F</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -303,6 +433,27 @@
 			<string>alfred.workflow.action.openurl</string>
 			<key>uid</key>
 			<string>D7CDFF11-8B19-4679-BEDE-B33AD5527EA6</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>{var:SEASON_ANIME_KEYWORD}</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Anime in this season</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>F72A6308-DF7F-483A-998C-465F17CD0411</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -336,56 +487,6 @@
 			<string>alfred.workflow.userinterface.grid</string>
 			<key>uid</key>
 			<string>276683FE-8E8A-4D13-A29A-B7AF1A4BA043</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>{var:SEASON_ANIME_KEYWORD}</string>
-				<key>subtext</key>
-				<string></string>
-				<key>text</key>
-				<string>Anime in this season</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>F72A6308-DF7F-483A-998C-465F17CD0411</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>fixedorder</key>
-				<false/>
-				<key>items</key>
-				<string>[{"title":"Open in browser","arg":"open"},{"title":"View Relations","arg":"relations"}]</string>
-				<key>matchmode</key>
-				<integer>0</integer>
-				<key>runningsubtext</key>
-				<string></string>
-				<key>subtext</key>
-				<string></string>
-				<key>title</key>
-				<string></string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.listfilter</string>
-			<key>uid</key>
-			<string>3D4FE817-3B19-4727-B8F7-818DA776E91F</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -492,6 +593,27 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>acceptsfiles</key>
+				<false/>
+				<key>acceptsmulti</key>
+				<integer>0</integer>
+				<key>acceptstext</key>
+				<false/>
+				<key>acceptsurls</key>
+				<true/>
+				<key>name</key>
+				<string>View Subject's Relations</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.universalaction</string>
+			<key>uid</key>
+			<string>44701FE5-003E-49E8-A2E6-C588CA3DCBBA</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>columncount</key>
 				<integer>4</integer>
 				<key>filterable</key>
@@ -525,21 +647,203 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>acceptsfiles</key>
+				<key>alfredfiltersresults</key>
 				<false/>
-				<key>acceptsmulti</key>
+				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
-				<key>acceptstext</key>
-				<false/>
-				<key>acceptsurls</key>
+				<key>argumenttreatemptyqueryasnil</key>
 				<true/>
-				<key>name</key>
-				<string>View Item's Relations</string>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>{var:SEARCH_SUBJECT_KEYWORD}</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>1</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Loading...</string>
+				<key>script</key>
+				<string></string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>src/AlfredAdapter/SubjectSearch.php</string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Search Bangumi.tv for '{query}'</string>
+				<key>type</key>
+				<integer>8</integer>
+				<key>withspace</key>
+				<true/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.trigger.universalaction</string>
+			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>44701FE5-003E-49E8-A2E6-C588CA3DCBBA</string>
+			<string>091DC072-2406-4782-A5FE-4E549D108BEA</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>text</key>
+				<string>Search Bangumi.tv for '{query}'</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.fallback</string>
+			<key>uid</key>
+			<string>B3F4F6DB-B46E-435A-AF1E-AEE1EDEE7D37</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>columncount</key>
+				<integer>5</integer>
+				<key>filterable</key>
+				<true/>
+				<key>fixedorder</key>
+				<false/>
+				<key>imageaspect</key>
+				<integer>0</integer>
+				<key>inputfile</key>
+				<string>src/AlfredAdapter/SubjectSearch.php</string>
+				<key>inputtype</key>
+				<integer>1</integer>
+				<key>loadingtext</key>
+				<string></string>
+				<key>showsubtitles</key>
+				<true/>
+				<key>showtitles</key>
+				<true/>
+				<key>subtitlesinfooter</key>
+				<true/>
+				<key>titlesinfooter</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.userinterface.grid</string>
+			<key>uid</key>
+			<string>8E7BEF35-CC2F-4844-977F-F0C09B0F480D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>{var:SEARCH_CHARACTER_KEYWORD}</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Search Bangumi.tv for Character '{query}'</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>B41FEE45-9279-4C5B-A09E-161370B68289</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>columncount</key>
+				<integer>5</integer>
+				<key>filterable</key>
+				<true/>
+				<key>fixedorder</key>
+				<false/>
+				<key>imageaspect</key>
+				<integer>1</integer>
+				<key>inputfile</key>
+				<string>src/AlfredAdapter/CharacterSearch.php</string>
+				<key>inputtype</key>
+				<integer>1</integer>
+				<key>loadingtext</key>
+				<string></string>
+				<key>showsubtitles</key>
+				<true/>
+				<key>showtitles</key>
+				<true/>
+				<key>subtitlesinfooter</key>
+				<true/>
+				<key>titlesinfooter</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.userinterface.grid</string>
+			<key>uid</key>
+			<string>4595F8D7-4C20-4E5C-BCD5-C1A0D22FBF13</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>columncount</key>
+				<integer>5</integer>
+				<key>filterable</key>
+				<true/>
+				<key>fixedorder</key>
+				<false/>
+				<key>imageaspect</key>
+				<integer>0</integer>
+				<key>inputfile</key>
+				<string>src/AlfredAdapter/PersonSearch.php</string>
+				<key>inputtype</key>
+				<integer>1</integer>
+				<key>loadingtext</key>
+				<string></string>
+				<key>showsubtitles</key>
+				<true/>
+				<key>showtitles</key>
+				<true/>
+				<key>subtitlesinfooter</key>
+				<true/>
+				<key>titlesinfooter</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.userinterface.grid</string>
+			<key>uid</key>
+			<string>379C74F0-E725-436D-8D5D-F2F93813460F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>{var:SEARCH_PERSON_KEYWORD}</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Search Bangumi.tv for Person '{query}'</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>9C7B99A8-60CA-435E-9868-3EE45113B233</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -548,26 +852,40 @@
 	<string></string>
 	<key>uidata</key>
 	<dict>
+		<key>091DC072-2406-4782-A5FE-4E549D108BEA</key>
+		<dict>
+			<key>xpos</key>
+			<real>240</real>
+			<key>ypos</key>
+			<real>490</real>
+		</dict>
 		<key>276683FE-8E8A-4D13-A29A-B7AF1A4BA043</key>
 		<dict>
 			<key>xpos</key>
-			<real>260</real>
+			<real>240</real>
 			<key>ypos</key>
 			<real>215</real>
 		</dict>
 		<key>33932D93-6610-41F6-B1DD-771D024735E3</key>
 		<dict>
 			<key>xpos</key>
-			<real>655</real>
+			<real>470</real>
 			<key>ypos</key>
 			<real>245</real>
+		</dict>
+		<key>379C74F0-E725-436D-8D5D-F2F93813460F</key>
+		<dict>
+			<key>xpos</key>
+			<real>240</real>
+			<key>ypos</key>
+			<real>770</real>
 		</dict>
 		<key>3D4FE817-3B19-4727-B8F7-818DA776E91F</key>
 		<dict>
 			<key>note</key>
 			<string>Command Panel</string>
 			<key>xpos</key>
-			<real>760</real>
+			<real>550</real>
 			<key>ypos</key>
 			<real>215</real>
 		</dict>
@@ -576,56 +894,95 @@
 			<key>xpos</key>
 			<real>65</real>
 			<key>ypos</key>
-			<real>385</real>
+			<real>350</real>
+		</dict>
+		<key>4595F8D7-4C20-4E5C-BCD5-C1A0D22FBF13</key>
+		<dict>
+			<key>xpos</key>
+			<real>240</real>
+			<key>ypos</key>
+			<real>630</real>
 		</dict>
 		<key>45BDF43B-E681-4006-B974-59EE745F8BDB</key>
 		<dict>
 			<key>xpos</key>
-			<real>1170</real>
+			<real>935</real>
 			<key>ypos</key>
-			<real>385</real>
+			<real>350</real>
 		</dict>
 		<key>52B547F0-F78A-4F25-8A22-6C1792AB58DE</key>
 		<dict>
 			<key>xpos</key>
-			<real>1070</real>
+			<real>840</real>
 			<key>ypos</key>
 			<real>245</real>
 		</dict>
 		<key>6D3ACD68-A616-4E6E-9237-1DA63C7C5632</key>
 		<dict>
 			<key>xpos</key>
-			<real>260</real>
+			<real>240</real>
 			<key>ypos</key>
 			<real>35</real>
+		</dict>
+		<key>8E7BEF35-CC2F-4844-977F-F0C09B0F480D</key>
+		<dict>
+			<key>xpos</key>
+			<real>415</real>
+			<key>ypos</key>
+			<real>490</real>
 		</dict>
 		<key>8EBA7AE5-4055-41B4-8EF3-8891BCA20F23</key>
 		<dict>
 			<key>xpos</key>
-			<real>470</real>
+			<real>430</real>
 			<key>ypos</key>
 			<real>35</real>
+		</dict>
+		<key>9C7B99A8-60CA-435E-9868-3EE45113B233</key>
+		<dict>
+			<key>note</key>
+			<string>Search Person</string>
+			<key>xpos</key>
+			<real>65</real>
+			<key>ypos</key>
+			<real>770</real>
 		</dict>
 		<key>A58ECFFD-0219-439E-ACC9-F78600AD4DE2</key>
 		<dict>
 			<key>xpos</key>
-			<real>960</real>
+			<real>725</real>
 			<key>ypos</key>
 			<real>235</real>
+		</dict>
+		<key>B3F4F6DB-B46E-435A-AF1E-AEE1EDEE7D37</key>
+		<dict>
+			<key>xpos</key>
+			<real>65</real>
+			<key>ypos</key>
+			<real>490</real>
+		</dict>
+		<key>B41FEE45-9279-4C5B-A09E-161370B68289</key>
+		<dict>
+			<key>note</key>
+			<string>Search Character</string>
+			<key>xpos</key>
+			<real>65</real>
+			<key>ypos</key>
+			<real>630</real>
 		</dict>
 		<key>D7CDFF11-8B19-4679-BEDE-B33AD5527EA6</key>
 		<dict>
 			<key>xpos</key>
-			<real>1370</real>
+			<real>1120</real>
 			<key>ypos</key>
 			<real>215</real>
 		</dict>
 		<key>F57D9644-7401-4229-911F-D0EDB10BE2E3</key>
 		<dict>
 			<key>xpos</key>
-			<real>1075</real>
+			<real>840</real>
 			<key>ypos</key>
-			<real>370</real>
+			<real>300</real>
 		</dict>
 		<key>F72A6308-DF7F-483A-998C-465F17CD0411</key>
 		<dict>
@@ -720,9 +1077,72 @@
 			<key>variable</key>
 			<string>SEASON_ANIME_KEYWORD</string>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>bs</string>
+				<key>placeholder</key>
+				<string>bs</string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string></string>
+			<key>label</key>
+			<string>Search Subject Keyword</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>SEARCH_SUBJECT_KEYWORD</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>bc</string>
+				<key>placeholder</key>
+				<string>bc</string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string></string>
+			<key>label</key>
+			<string>Search Character Keyword</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>SEARCH_CHARACTER_KEYWORD</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>bp</string>
+				<key>placeholder</key>
+				<string>bp</string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string></string>
+			<key>label</key>
+			<string>Search Person Keyword</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>SEARCH_PERSON_KEYWORD</string>
+		</dict>
 	</array>
 	<key>version</key>
-	<string>0.1.5</string>
+	<string>0.2.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/fradeet/alfred-bangumi-workflow</string>
 </dict>
