@@ -6,11 +6,13 @@ declare(strict_types=1);
 namespace Alfred\Workflow\AlfredAdapter;
 
 use Alfred\Workflow\AlfredAdapter\Support\JsonEncoder;
+use Alfred\Workflow\AlfredAdapter\Support\WorkflowEnvironment;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSF;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFCache;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFItem;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFItemIcon;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFItemText;
+use Alfred\Workflow\BangumiSdk\Connectors\BangumiConnector;
 use Alfred\Workflow\BangumiSdk\Dto\LegacySubjectSmall;
 use Alfred\Workflow\BangumiSiteUrl;
 use Alfred\Workflow\DailyBroadcast as DailyBroadcastCore;
@@ -20,14 +22,6 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'stderr');
 
 require dirname(__DIR__, 2).'/vendor/autoload.php';
-
-/** Return the environment value or its fallback when unset or empty. */
-function dailyBroadcastEnvironment(string $name, string $fallback): string
-{
-    $value = getenv($name);
-
-    return false === $value || '' === $value ? $fallback : $value;
-}
 
 /**
  * Return subject fields required to build an Alfred item.
@@ -54,9 +48,12 @@ function dailyBroadcastRequiredSubjectFields(LegacySubjectSmall $subject): array
 }
 
 /** Fetch the daily schedule and adapt it to Alfred Script Filter items. */
-function dailyBroadcastResponse(string $cacheDirectory, string $siteDomain): AlfredSF
-{
-    $schedule = (new DailyBroadcastCore())();
+function dailyBroadcastResponse(
+    string $cacheDirectory,
+    string $siteDomain,
+    BangumiConnector $connector,
+): AlfredSF {
+    $schedule = (new DailyBroadcastCore($connector))();
     $weekday = $schedule->weekday->cn;
     $imageUrls = [];
 
@@ -114,18 +111,18 @@ function dailyBroadcastResponse(string $cacheDirectory, string $siteDomain): Alf
 
     return new AlfredSF(
         items: $items,
-        cache: new AlfredSFCache(seconds: 43200, loosereload: true),
+        cache: new AlfredSFCache(seconds: 43200),
     );
 }
 
 $jsonEncoder = new JsonEncoder();
 
 try {
-    $defaultCacheDirectory = sys_get_temp_dir().'/com.fradeet.bangumitv';
-    $cacheDirectory = dailyBroadcastEnvironment('alfred_workflow_cache', $defaultCacheDirectory);
-    $siteDomain = dailyBroadcastEnvironment('BGM_SITE_DOMAIN', 'https://bgm.tv/');
+    $cacheDirectory = WorkflowEnvironment::cacheDirectory();
+    $siteDomain = WorkflowEnvironment::value('BGM_SITE_DOMAIN', 'https://bgm.tv/');
+    $connector = WorkflowEnvironment::bangumiConnector();
 
-    echo $jsonEncoder(dailyBroadcastResponse($cacheDirectory, $siteDomain));
+    echo $jsonEncoder(dailyBroadcastResponse($cacheDirectory, $siteDomain, $connector));
 } catch (\Throwable $exception) {
     fwrite(STDERR, $exception.PHP_EOL);
 

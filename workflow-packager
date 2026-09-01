@@ -24,7 +24,7 @@ if [[ -f "${composer_installed}" ]] \
     && php -r 'exit((require $argv[1])["root"]["dev"] === true ? 0 : 1);' "${composer_installed}"
 then
     echo "Composer development dependencies are installed; reinstalling without them."
-    composer install --working-dir="${workflow_directory}" --no-dev --no-interaction
+    composer install --working-dir="${workflow_directory}" --no-dev --no-interaction --optimize-autoloader
 fi
 
 readonly workflow_file="${1:-${project_directory}/${workflow_name}.alfredworkflow}"

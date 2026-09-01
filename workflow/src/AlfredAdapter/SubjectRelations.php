@@ -6,23 +6,21 @@ declare(strict_types=1);
 namespace Alfred\Workflow\AlfredAdapter;
 
 use Alfred\Workflow\AlfredAdapter\Support\JsonEncoder;
-use Alfred\Workflow\AlfredAdapter\Support\LocalResponseCache;
+use Alfred\Workflow\AlfredAdapter\Support\WorkflowEnvironment;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSF;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFItem;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFItemIcon;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredSFItemText;
+use Alfred\Workflow\BangumiSdk\Connectors\BangumiConnector;
 use Alfred\Workflow\BangumiSdk\Enums\SubjectType;
 use Alfred\Workflow\BangumiSiteUrl;
 use Alfred\Workflow\ImageCache;
-use Alfred\Workflow\SubjectIdFromUrl;
 use Alfred\Workflow\SubjectRelations as SubjectRelationsCore;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 'stderr');
 
 require dirname(__DIR__, 2).'/vendor/autoload.php';
-
-const SUBJECT_RELATIONS_CACHE_SECONDS = 8 * 60 * 60;
 
 /** Return the subject URL supplied to the Alfred Grid. */
 function subjectRelationsInput(): string
@@ -37,18 +35,14 @@ function subjectRelationsInput(): string
     return $subjectUrl;
 }
 
-/** Return the environment value or its fallback when unset or empty. */
-function subjectRelationsEnvironment(string $name, string $fallback): string
-{
-    $value = getenv($name);
-
-    return false === $value || '' === $value ? $fallback : $value;
-}
-
 /** Fetch related subjects and adapt them to Alfred Grid items. */
-function subjectRelationsResponse(string $subjectUrl, string $cacheDirectory, string $siteDomain): AlfredSF
-{
-    $relations = (new SubjectRelationsCore())($subjectUrl);
+function subjectRelationsResponse(
+    string $subjectUrl,
+    string $cacheDirectory,
+    string $siteDomain,
+    BangumiConnector $connector,
+): AlfredSF {
+    $relations = (new SubjectRelationsCore($connector))($subjectUrl);
     $imageUrls = [];
 
     foreach ($relations as $relation) {
@@ -105,25 +99,12 @@ function subjectRelationsTypeName(SubjectType $type): string
 $jsonEncoder = new JsonEncoder();
 
 try {
-    $defaultCacheDirectory = sys_get_temp_dir().'/com.fradeet.bangumitv';
-    $cacheDirectory = subjectRelationsEnvironment('alfred_workflow_cache', $defaultCacheDirectory);
-    $siteDomain = subjectRelationsEnvironment('BGM_SITE_DOMAIN', 'https://bgm.tv/');
+    $cacheDirectory = WorkflowEnvironment::cacheDirectory();
+    $siteDomain = WorkflowEnvironment::value('BGM_SITE_DOMAIN', 'https://bgm.tv/');
     $subjectUrl = subjectRelationsInput();
-    $subjectId = (new SubjectIdFromUrl())($subjectUrl);
-    $responseCache = new LocalResponseCache(
-        directory: $cacheDirectory.'/subject-relations',
-        ttlSeconds: SUBJECT_RELATIONS_CACHE_SECONDS,
-        bypass: '1' === subjectRelationsEnvironment('alfred_debug', '0'),
-    );
-    $cacheKey = $subjectId.'|'.$siteDomain;
-    $json = $responseCache->get($cacheKey);
+    $connector = WorkflowEnvironment::bangumiConnector();
 
-    if (null === $json) {
-        $json = $jsonEncoder(subjectRelationsResponse($subjectUrl, $cacheDirectory, $siteDomain));
-        $responseCache->put($cacheKey, $json);
-    }
-
-    echo $json;
+    echo $jsonEncoder(subjectRelationsResponse($subjectUrl, $cacheDirectory, $siteDomain, $connector));
 } catch (\Throwable $exception) {
     fwrite(STDERR, $exception.PHP_EOL);
 

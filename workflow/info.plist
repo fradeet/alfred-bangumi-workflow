@@ -24,7 +24,7 @@
 				<key>destinationuid</key>
 				<string>33932D93-6610-41F6-B1DD-771D024735E3</string>
 				<key>modifiers</key>
-				<integer>0</integer>
+				<integer>262144</integer>
 				<key>modifiersubtext</key>
 				<string></string>
 				<key>vitoclose</key>
@@ -534,7 +534,7 @@
 				<key>acceptsurls</key>
 				<true/>
 				<key>name</key>
-				<string>View Subject's Relations</string>
+				<string>View Item's Relations</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.trigger.universalaction</string>
@@ -722,7 +722,7 @@
 		</dict>
 	</array>
 	<key>version</key>
-	<string>0.1.2</string>
+	<string>0.1.5</string>
 	<key>webaddress</key>
 	<string>https://github.com/fradeet/alfred-bangumi-workflow</string>
 </dict>

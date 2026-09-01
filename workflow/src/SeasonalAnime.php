@@ -13,7 +13,7 @@ use Alfred\Workflow\BangumiSdk\Requests\GetCalendarRequest;
 /** Fetch all anime in Bangumi's current calendar. */
 final class SeasonalAnime
 {
-    public function __construct(private readonly BangumiConnector $connector = new BangumiConnector()) {}
+    public function __construct(private readonly BangumiConnector $connector) {}
 
     /**
      * @return list<LegacySubjectSmall>

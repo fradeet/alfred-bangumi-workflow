@@ -6,10 +6,12 @@ declare(strict_types=1);
 namespace Alfred\Workflow\AlfredAdapter;
 
 use Alfred\Workflow\AlfredAdapter\Support\JsonEncoder;
+use Alfred\Workflow\AlfredAdapter\Support\WorkflowEnvironment;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredTV;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredTVBehaviour;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredTVBehaviourResponse;
 use Alfred\Workflow\AlfredAdapter\Types\AlfredTVBehaviourScroll;
+use Alfred\Workflow\BangumiSdk\Connectors\BangumiConnector;
 use Alfred\Workflow\BangumiSdk\Dto\InfoboxValue;
 use Alfred\Workflow\BangumiSdk\Dto\Subject;
 use Alfred\Workflow\BangumiSdk\Enums\SubjectType;
@@ -34,9 +36,9 @@ function subjectDetailsInput(): string
 }
 
 /** Fetch a Bangumi subject and adapt it to an Alfred Text View. */
-function subjectDetailsResponse(string $subjectUrl): AlfredTV
+function subjectDetailsResponse(string $subjectUrl, BangumiConnector $connector): AlfredTV
 {
-    $subject = (new SubjectDetailsCore())($subjectUrl);
+    $subject = (new SubjectDetailsCore($connector))($subjectUrl);
 
     return new AlfredTV(
         response: subjectDetailsMarkdown($subject, $subjectUrl),
@@ -186,7 +188,9 @@ function subjectDetailsEscapeMarkdown(string $value): string
 $jsonEncoder = new JsonEncoder();
 
 try {
-    echo $jsonEncoder(subjectDetailsResponse(subjectDetailsInput()));
+    $connector = WorkflowEnvironment::bangumiConnector();
+
+    echo $jsonEncoder(subjectDetailsResponse(subjectDetailsInput(), $connector));
 } catch (\Throwable $exception) {
     fwrite(STDERR, $exception.PHP_EOL);
 
