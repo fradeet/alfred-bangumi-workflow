@@ -15,7 +15,7 @@ class BangumiConnector extends Connector implements Cacheable
 {
     use HasCaching;
 
-    private const CACHE_EXPIRY_SECONDS = 8 * 60 * 60;
+    private const CACHE_EXPIRY_SECONDS = 60 * 60;
 
     public function __construct(private readonly CacheInterface $cache) {}
 
