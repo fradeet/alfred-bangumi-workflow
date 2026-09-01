@@ -722,7 +722,7 @@
 		</dict>
 	</array>
 	<key>version</key>
-	<string>0.1.3</string>
+	<string>0.1.5</string>
 	<key>webaddress</key>
 	<string>https://github.com/fradeet/alfred-bangumi-workflow</string>
 </dict>
